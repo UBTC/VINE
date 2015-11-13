@@ -1,4 +1,7 @@
 .directory
+.netrwhist
+UltiSnips/
+autoload/plug.vim
 .custom.el
 .depend
 pyim/
@@ -14,7 +17,6 @@ anaconda-mode/
 /tmp
 /auto-save-list
 /latex-math-preview-cache
-/autoload
 /.session
 *.elc
 company-statistics-cache.el

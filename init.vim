@@ -26,7 +26,7 @@
 call plug#begin()
     " debugger
         Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-        Plug 'idanarye/vim-vebugger'
+        Plug 'idanarye/vim-vebugger', { 'on':  'VBGattachGDB' }
     " colorscheme
         Plug 'tomasr/molokai'
     " session and more
@@ -36,6 +36,8 @@ call plug#begin()
     " snippet
         Plug 'sirver/ultisnips'
         Plug 'honza/vim-snippets'
+    " tagbar --- use with exuberant-ctags
+        Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle' }
     " golang
         Plug 'fatih/vim-go'
     " python
@@ -48,15 +50,49 @@ call plug#begin()
     " surround
         Plug 'tpope/vim-surround'
     " nerds
-        Plug 'scrooloose/nerdtree'
+        Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
         Plug 'scrooloose/nerdcommenter'
+    " go code complete --- I add this thing very manually
+        " 1. install it as described
+        " 2. cp ~/.vim/autoload/gocomplete.vim ~/.nvim/autoload/
+        Plug 'nsf/gocode'
 call plug#end()
 
+"UltiSnips
 "cp ~/.config/nvim/plugged/vim-snippets/UltiSnips/ ~/.config/nvim/ (or use a link)
 let g:UltiSnipsExpandTrigger = '<M-Tab>'
 let g:UltiSnipsJumpForwardTrigger = '<Tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
 
+"Tagbar configuration for gotags
+"   --- go get -u github.com/jstemmer/gotags
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : '~/goWork/bin/gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -250,32 +286,40 @@ endif
 " Delete trailing white spaces
 noremap <leader><BS> :%s/\s\+$//ge<CR>
 
-" F5 run/compile according to filetypes
-au FileType go nmap <F5>   <Plug>(go-run)
-au FileType go nmap <S-F5> <Plug>(go-build)
-au FileType python let g:pymode_run_bind = "<F5>"
-au FileType tex nmap <S-F5> :xelatex %<CR>
+" window frames
+noremap <F2> :split<CR>
+noremap <F3> :vsplit<CR>
+noremap <F4> :only<CR>
+noremap <S-F4> :close<CR>
 
-" Pressing will toggle and untoggle spell checking
+" F5: run according to filetypes
+au FileType go nmap <F5>   <Plug>(go-run)
+au FileType python let g:pymode_run_bind = "<F5>"
+" S-F5 to build them
+au FileType go nmap <S-F5> <Plug>(go-build)
+au FileType tex nmap <S-F5> :xelatex %<CR>
+au FileType markdown nmap <S-F5> :pandoc -f markdown+lhs % -o markdown.html -t dzslides -i -s -S --toc<CR>
+
+" F6: toggle and untoggle spell checking
 noremap <F6> :setlocal spell!<CR>
-" and grammar
+" S-F6 for grammar
 au FileType go nmap <S-F6> <Plug>(go-test)
 
-" comment a region
+" F7: comment a region. this should be changed, since nerdcommenter works like a charm
 noremap <silent> <F7>   :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
 noremap <silent> <S-F7> :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
 
-" open vim file explorer
+" F8: open vim file explorer
 noremap <F8> :NERDTreeToggle<CR>
-" Switch CWD to the directory of the open buffer
+" S-F8 switch CWD to the directory of the open buffer
 noremap <S-F8> :cd %:p:h<CR>:pwd<CR>
 
-" open terminal
+" F9: open terminal
 noremap <F9> :vsplit<CR><C-W>l:terminal<CR>
 noremap <S-F9> :tabnew<CR>:terminal<CR>
 
+" F10: Delete/add the Windows ^M ;; see :help 'fft'
 " let vim reload the file and the 'crlf' or 'lf' as endln.
-" Delete/add the Windows ^M ;; see :help 'fft'
 noremap <S-F10> :e! ++ff=dos<CR>
 noremap <M-F10> :e! ++ff=mac<CR>
 noremap <C-F10> :e! ++ff=unix<CR>
@@ -285,7 +329,8 @@ noremap <F11>   :call EnvProcess()<CR>
 noremap <S-F11> :call CopyrightAdd()<CR>
 
 "  F12: start the debugger
-noremap <F12> :VBGattachGDB<CR>
+noremap <F12> :TagbarToggle<CR>
+noremap <S-F12> :VBGattachGDB<CR>
 
 " Quickly insert parenthesis/brackets/etc.:
 inoremap <leader>( ()<esc>i
