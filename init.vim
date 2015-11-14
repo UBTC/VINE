@@ -52,10 +52,10 @@ call plug#begin()
     " nerds
         Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
         Plug 'scrooloose/nerdcommenter'
-    " go code complete --- I add this thing very manually
+    " go code complete -(it seems not stable)- I add this thing very manually
         " 1. install it as described
         " 2. cp ~/.vim/autoload/gocomplete.vim ~/.nvim/autoload/
-        Plug 'nsf/gocode'
+        "Plug 'nsf/gocode'
 call plug#end()
 
 "UltiSnips
@@ -225,6 +225,9 @@ vnoremap <silent> <leader>/ :call VisualSelection('replace', '')<CR>
 " Disable highlight when <leader>/ is pressed.
 noremap <silent> <leader>/ :noh<CR>
 
+" Del the tailing ^M (to work with MSDOS files)
+noremap <Leader>; mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+
 " Smart way to move between windows
 noremap <C-j> <C-W>j
 noremap <C-k> <C-W>k
@@ -276,6 +279,11 @@ nnoremap <M-k> mz:m-2<CR>`z
 vnoremap <M-j> :m'>+<CR>`<my`>mzgv`yo`z
 vnoremap <M-k> :m'<-2<CR>`>my`<mzgv`yo`z
 
+" command line keybindings
+cnoremap <C-A> <Home>
+cnoremap <C-E> <End>
+cnoremap <C-K> d$
+
 if has("mac") || has("macunix")
     vmap <D-j> <M-j>
     nmap <D-j> <M-j>
@@ -286,51 +294,38 @@ endif
 " Delete trailing white spaces
 noremap <leader><BS> :%s/\s\+$//ge<CR>
 
-" window frames
-noremap <F2> :split<CR>
-noremap <F3> :vsplit<CR>
-noremap <F4> :only<CR>
-noremap <S-F4> :close<CR>
+" F1-F4 resources
+noremap <F1> :Unite file_rec<CR>
+noremap <F2> :Unite file<CR>
+noremap <F3> :Unite buffer<CR>
+noremap <F4> :Unite tab<CR>
 
 " F5: run according to filetypes
-au FileType go nmap <F5>   <Plug>(go-run)
+au FileType go nmap <F5> :terminal<CR><Plug>(go-run)
 au FileType python let g:pymode_run_bind = "<F5>"
-" S-F5 to build them
-au FileType go nmap <S-F5> <Plug>(go-build)
-au FileType tex nmap <S-F5> :xelatex %<CR>
-au FileType markdown nmap <S-F5> :pandoc -f markdown+lhs % -o markdown.html -t dzslides -i -s -S --toc<CR>
 
 " F6: toggle and untoggle spell checking
 noremap <F6> :setlocal spell!<CR>
-" S-F6 for grammar
-au FileType go nmap <S-F6> <Plug>(go-test)
 
-" F7: comment a region. this should be changed, since nerdcommenter works like a charm
-noremap <silent> <F7>   :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
-noremap <silent> <S-F7> :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
+" F7: build something
+au FileType go nmap <F7> <Plug>(go-build)
+au FileType tex nmap <F7> :xelatex %<CR>
+au FileType markdown nmap <F7> :pandoc -f markdown+lhs % -o markdown.html -t dzslides -i -s -S --toc<CR>
 
 " F8: open vim file explorer
 noremap <F8> :NERDTreeToggle<CR>
-" S-F8 switch CWD to the directory of the open buffer
-noremap <S-F8> :cd %:p:h<CR>:pwd<CR>
 
 " F9: open terminal
 noremap <F9> :vsplit<CR><C-W>l:terminal<CR>
-noremap <S-F9> :tabnew<CR>:terminal<CR>
 
-" F10: Delete/add the Windows ^M ;; see :help 'fft'
-" let vim reload the file and the 'crlf' or 'lf' as endln.
-noremap <S-F10> :e! ++ff=dos<CR>
-noremap <M-F10> :e! ++ff=mac<CR>
-noremap <C-F10> :e! ++ff=unix<CR>
+" F10: start the debugger
+noremap <F10> :TagbarToggle<CR>
 
-"  F11: attach copyright things
-noremap <F11>   :call EnvProcess()<CR>
-noremap <S-F11> :call CopyrightAdd()<CR>
+"  F11: tags
+noremap <F11> :VBGattachGDB<CR>
 
-"  F12: start the debugger
-noremap <F12> :TagbarToggle<CR>
-noremap <S-F12> :VBGattachGDB<CR>
+"  F12 attach copyright things
+noremap <F12> :call CopyrightAdd()<CR>:call EnvProcess()<CR>
 
 " Quickly insert parenthesis/brackets/etc.:
 inoremap <leader>( ()<esc>i
@@ -374,12 +369,12 @@ vnoremap <C-S> <C-C>:update<CR>
 inoremap <C-S> <C-O>:update<CR>
 
 " CTRL-A is Select all
-noremap <C-A> gggH<C-O>G
-inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
-cnoremap <C-A> <C-C>gggH<C-O>G
-onoremap <C-A> <C-C>gggH<C-O>G
-snoremap <C-A> <C-C>gggH<C-O>G
-xnoremap <C-A> <C-C>ggVG
+noremap  <C-S-A> gggH<C-O>G
+inoremap <C-S-A> <C-O>gg<C-O>gH<C-O>G
+cnoremap <C-S-A> <C-C>gggH<C-O>G
+onoremap <C-S-A> <C-C>gggH<C-O>G
+snoremap <C-S-A> <C-C>gggH<C-O>G
+xnoremap <C-S-A> <C-C>ggVG
 
 " CTRL-F4 is Close window
 noremap <C-F4> <C-W>c
@@ -394,7 +389,7 @@ onoremap <C-F4> <C-C><C-W>c
 set guifont=Ubuntu\ mono\ 13
 
 " set delay
-set timeoutlen=250
+set timeoutlen=1000
 
 "show line number
 set number
@@ -447,7 +442,7 @@ xnoremap P Pgvy
 
 " To avoid the extra 'shift' keypress when typing the colon to go to cmdline mode
 noremap ; :
-noremap ;; ;
+noremap : ;
 
 " make >> and << work better
 set shiftround
