@@ -3,19 +3,14 @@
 " Vim Imitating Neo Emacs --- my NeoVim configuration
 "     for processing tex/pdf, and coding in Golang & Python
 "
-" Based on Amir Salihefendic's basic.vimrc *mainly*
-" https://github.com/amix/vimrc
-" Last change: 2012.05.29
+" Based on Amir Salihefendic's basic.vimrc
+"     https://github.com/amix/vimrc
+" Bram Moolenaar's mswin.vim
+"     http://vim.cybermirror.org/runtime/mswin.vim
+" and many internet resources...
 "
-" Based on Bram Moolenaar's mswin.vim
-" http://vim.cybermirror.org/runtime/mswin.vim
-" Last change: 2006.04.02
-"
-" Based on many internet resources...
-"
-" Revised by Mogei Wang, in 2014.
-" Revised by Mogei Wang, in 2015.
-" https://github.com/mogeiwang/
+" Mogei Wang, 2015
+" https://github.com/mogeiwang/vine
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -29,15 +24,15 @@ call plug#begin()
         Plug 'idanarye/vim-vebugger', { 'on':  'VBGattachGDB' }
     " colorscheme
         Plug 'tomasr/molokai'
-    " session and more
+    " resources
         Plug 'shougo/unite.vim'
     " YCM
         Plug 'Valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive;./install.py --gocode-completer' }
     " snippet
         Plug 'sirver/ultisnips'
-        Plug 'honza/vim-snippets'
+        Plug 'honza/vim-snippets', { 'do': 'cp ~/.config/nvim/plugged/vim-snippets/UltiSnips/ ~/.config/nvim/' }
     " tagbar --- use with exuberant-ctags
-        Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle' }
+        Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle', 'do': 'go get -u github.com/jstemmer/gotags' }
     " golang
         Plug 'fatih/vim-go'
     " python
@@ -52,20 +47,16 @@ call plug#begin()
     " nerds
         Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
         Plug 'scrooloose/nerdcommenter'
-    " go code complete -(it seems not stable)- I add this thing very manually
-        " 1. install it as described
-        " 2. cp ~/.vim/autoload/gocomplete.vim ~/.nvim/autoload/
-        "Plug 'nsf/gocode'
+    " go code complete
+        Plug 'nsf/gocode', { 'do': 'go get -u github.com/nsf/gocode;cp ~/.config/nvim/plugged/gocode/vim/autoload/gocomplete.vim ~/.nvim/autoload/' }
 call plug#end()
 
 "UltiSnips
-"cp ~/.config/nvim/plugged/vim-snippets/UltiSnips/ ~/.config/nvim/ (or use a link)
 let g:UltiSnipsExpandTrigger = '<M-Tab>'
 let g:UltiSnipsJumpForwardTrigger = '<Tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
 
 "Tagbar configuration for gotags
-"   --- go get -u github.com/jstemmer/gotags
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
     \ 'kinds'     : [
@@ -93,38 +84,53 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : '~/goWork/bin/gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General
+" => Mode
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " replace system's fish shell. run sh cmd with :! or :r!
-set shell=/bin/sh
+set shell=/bin/bash
 
 " use Space as the leader
-let mapleader = " "
-let g:mapleader = " "
+let mapleader = ","
+let g:mapleader = ","
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VIM user interface
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Try to keep the cursor line in the vertically center (27 lines)
-set scrolloff=100
+" Enable syntax highlighting
+syntax enable
+
+"set fold
+set foldenable
+set foldmethod=indent " marker " or manual
+
+" set line break
+set linebreak
+set textwidth=0
+set wrapmargin=0
 
 " command-line completion
 set wildmode=longest:full,full
 
-" Ignore compiled files
-set wildignore=*.o,*~,*.pyc
-if has("win16") || has("win32")
-    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
-else
-    set wildignore+=.git\*,.hg\*,.svn\*
-endif
+" to recognize a list header
+set formatlistpat=^\\s*\\(\\d\\\|[-*]\\)\\+[\\]:.)}\\t\ ]\\s*
+set formatoptions+=n
 
-"Always show current position
-set ruler
+"show the tabes
+set list
+set listchars=tab:\|\ ,trail:·,extends:#,nbsp:.
 
-" Height of the command bar
-set cmdheight=2
+"do not break words joined by the following characters
+set iskeyword+=_,@
+
+" make >> and << work better
+set shiftround
+
+" Specify the behavior when switching between buffers
+set switchbuf=useopen,usetab,newtab
+set stal=2
+
+" wrap or not
+set wrap
+set whichwrap+=<,>,[,],h,l,b,s,~
 
 " A buffer becomes hidden when it is abandoned
 set hid
@@ -141,12 +147,35 @@ set lazyredraw
 " For regular expressions turn magic on
 set magic
 
-" Show matching brackets when text indicator is over them
+"use dialog when file was not saved
+set confirm
+
+"inline replace
+set gdefault
+
+"set auto-complete
+set completeopt=longest,menu
+
+"share clipboard
+set clipboard+=unnamedplus
+
+" Use spaces instead of tabs
+set expandtab
+
+" 1 tab == 4 spaces
+set shiftwidth=4
+set tabstop=4
+
+" Show matching brackets, and how many tenths of a second to show
 set showmatch
+set mat=10
 
-" How many tenths of a second to blink when matching brackets
-set mat=2
+" set delay
+set timeoutlen=1000
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Screen
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " No annoying sound on errors
 set noerrorbells
 set novisualbell
@@ -156,11 +185,24 @@ set tm=500
 " Add a bit extra margin to the left
 set foldcolumn=1
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors and Fonts
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Enable syntax highlighting
-syntax enable
+"show the command typing
+set showcmd
+
+" Try to keep the cursor line in the vertically center (27 lines)
+set scrolloff=100
+
+"Always show current position
+set ruler
+
+"show line number
+set number
+
+" hightlight current line/col
+set cursorline
+set cursorcolumn
+
+" Height of the command bar
+set cmdheight=2
 
 " colorscheme and background
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -170,16 +212,24 @@ set background=dark
 
 " Set extra options when running in GUI mode
 if has("gui_running")
-    set guioptions-=T
-    set guioptions-=e
+    set guioptions-=T,e
     set guitablabel=%M\ %t
 endif
 
-" Use Unix as the standard file type
-set ffs=unix,dos,mac
+" colors
+set colorcolumn=+1
+hi ColorColumn NONE ctermbg=Cyan
+
+"set font :set guifont=Monospace\ 12
+set guifont=Ubuntu\ mono\ 13
+
+" Format the status line
+set statusline=\ \%3cC\ \%4lL\ \%<\%p%%\%L\ \%8bA\ \%{HasPaste()}\ %3{HasLinewidth()}W\ NM\%=%n%m\%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\"}[%{&ff}][%r%h%w]\%F
+au InsertEnter * set statusline=\ \%3cC\ \%4lL\ \%<\%p%%\%L\ \%8bA\ \%{HasPaste()}\ %3{HasLinewidth()}W\ MI\%=%n%m\%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\"}[%{&ff}][%r%h%w]\%F
+au InsertLeave * set statusline=\ \%3cC\ \%4lL\ \%<\%p%%\%L\ \%8bA\ \%{HasPaste()}\ %3{HasLinewidth()}W\ NM\%=%n%m\%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\"}[%{&ff}][%r%h%w]\%F
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Files and  backups
+" => Files
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Set dir to the current file's directory.
 set autochdir
@@ -187,27 +237,69 @@ set autochdir
 " Open dialog defaults to the current file's directory.
 set browsedir=buffer
 
+" Use Unix as the standard file type
+set ffs=unix,dos,mac
+
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32")
+    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+else
+    set wildignore+=.git\*,.hg\*,.svn\*
+endif
+
 " Turn backup on. Need to build these folders manually.
 set backup
 set backupdir=/home/mw/.config/nvim/backup
 set directory=/home/mw/.config/nvim/tmp
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Tab and indent related
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Use spaces instead of tabs
-set expandtab
+" encodeing just opened file.
+set fileencodings=utf8,gbk,ucs-bom,cp936,gb2312,gb18030,big5,euc-jp,euc-kr
 
-" 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=4
+" Return to last edit position when opening files (You want this!)
+autocmd BufReadPost *
+    \ exec ":call CopyrightUpdate()" |
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \ exe "normal! g`\"" |
+    \ exe "normal! zz" |
+    \ endif
+
+" Automatically update copyright notice with current year
+autocmd BufWritePre *
+    \ exec ":call CopyrightUpdate()" |
+    \ exec ":call DeleteTrailingWS()" |
+    \ let &backupext = '.v-' . strftime("%Y%m%d-%H%M%S")
+
+" enable omni-completion
+set omnifunc=syntaxcomplete#Complete
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+autocmd FileType perl set omnifunc=perlcomplete#Complete
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType node set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+autocmd FileType cpp set omnifunc=cppcomplete#Complete
+autocmd FileType c set omnifunc=ccomplete#Complete
+autocmd FileType d set omnifunc=ccomplete#Complete
+autocmd Filetype octave set omnifunc=syntaxcomplete#Complete
+autocmd FileType go set omnifunc=gocomplete#Complete
+
+" commenting blocks of code.
+                                     let b:comment_leader = '// '
+autocmd FileType c,d,cpp,java,scala  let b:comment_leader = '// '
+autocmd FileType sh,ruby,python,text let b:comment_leader = '#  '
+autocmd FileType conf,fstab,perl     let b:comment_leader = '#  '
+autocmd FileType tex,octave          let b:comment_leader = '%  '
+autocmd FileType mail                let b:comment_leader = '>  '
+autocmd FileType vim                 let b:comment_leader = '"  '
+autocmd FileType lisp                let b:comment_leader = ';; '
+autocmd FileType haskell,vhdl,ada    let b:comment_leader = '-- '
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Moving around, tabs, windows and buffers
+" => Keybindings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Avoids updating the screen before commands are completed
-set lazyredraw
-
 " Treat long lines as break lines (useful when moving around in them)
 nnoremap j gj
 nnoremap k gk
@@ -238,38 +330,8 @@ noremap <C-l> <C-W>l
 command! Bclose call <SID>BufcloseCloseIt()
 
 " Opens a new tab with the current buffer's path
-" Super useful when editing files in the same directory
 noremap <leader><CR> :tabedit <c-r>=expand("%:p:h")<CR>/
 
-" Specify the behavior when switching between buffers
-set switchbuf=useopen,usetab,newtab
-set stal=2
-
-" Return to last edit position when opening files (You want this!)
-autocmd BufReadPost *
-    \ exec ":call CopyrightUpdate()" |
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \ exe "normal! g`\"" |
-    \ exe "normal! zz" |
-    \ endif
-
-" Automatically update copyright notice with current year
-autocmd BufWritePre *
-    \ exec ":call CopyrightUpdate()" |
-    \ exec ":call DeleteTrailingWS()" |
-    \ let &backupext = '.v-' . strftime("%Y%m%d-%H%M%S")
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Status line
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Format the status line
-set statusline=\ \%3cC\ \%4lL\ \%<\%p%%\%L\ \%8bA\ \%{HasPaste()}\ %3{HasLinewidth()}W\ NM\%=%n%m\%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\"}[%{&ff}][%r%h%w]\%F
-au InsertEnter * set statusline=\ \%3cC\ \%4lL\ \%<\%p%%\%L\ \%8bA\ \%{HasPaste()}\ %3{HasLinewidth()}W\ MI\%=%n%m\%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\"}[%{&ff}][%r%h%w]\%F
-au InsertLeave * set statusline=\ \%3cC\ \%4lL\ \%<\%p%%\%L\ \%8bA\ \%{HasPaste()}\ %3{HasLinewidth()}W\ NM\%=%n%m\%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\"}[%{&ff}][%r%h%w]\%F
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => keybindings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " :W sudo saves the file
 command! W w !sudo tee % > /dev/null
 
@@ -283,13 +345,6 @@ vnoremap <M-k> :m'<-2<CR>`>my`<mzgv`yo`z
 cnoremap <C-A> <Home>
 cnoremap <C-E> <End>
 cnoremap <C-K> d$
-
-if has("mac") || has("macunix")
-    vmap <D-j> <M-j>
-    nmap <D-j> <M-j>
-    nmap <D-k> <M-k>
-    vmap <D-k> <M-k>
-endif
 
 " Delete trailing white spaces
 noremap <leader><BS> :%s/\s\+$//ge<CR>
@@ -316,7 +371,7 @@ au FileType markdown nmap <F7> :pandoc -f markdown+lhs % -o markdown.html -t dzs
 noremap <F8> :NERDTreeToggle<CR>
 
 " F9: open terminal
-noremap <F9> :vsplit<CR><C-W>l:terminal<CR>
+noremap <F9> :vsplit<CR><C-W>l:terminal 'fish'<CR>
 
 " F10: start the debugger
 noremap <F10> :TagbarToggle<CR>
@@ -326,37 +381,6 @@ noremap <F11> :VBGattachGDB<CR>
 
 "  F12 attach copyright things
 noremap <F12> :call CopyrightAdd()<CR>:call EnvProcess()<CR>
-
-" Quickly insert parenthesis/brackets/etc.:
-inoremap <leader>( ()<esc>i
-inoremap <leader>[ []<esc>i
-inoremap <leader>{ {}<esc>i
-inoremap <leader>' ''<esc>i
-inoremap <leader>" ""<esc>i
-inoremap <leader>` `'<esc>i
-inoremap <leader>~ ``"<esc>i
-inoremap <leader>$ $$<esc>i
-inoremap <leader>\| \|\|<esc>i
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => MSOffice keybings. Based on Bram Moolenaar's mswin.vim
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" wrap or not
-set wrap
-set whichwrap+=<,>,[,],h,l,b,s,~
-
-" set line break
-set linebreak
-set textwidth=0
-set wrapmargin=0
-
-" colors
-set colorcolumn=+1
-hi ColorColumn NONE ctermbg=Cyan
-
-" to recognize a list header
-set formatlistpat=^\\s*\\(\\d\\\|[-*]\\)\\+[\\]:.)}\\t\ ]\\s* "and bullets, too
-set formatoptions+=n
 
 " backspace in Visual mode deletes selection
 vnoremap <BS> d
@@ -382,18 +406,6 @@ inoremap <C-F4> <C-O><C-W>c
 cnoremap <C-F4> <C-C><C-W>c
 onoremap <C-F4> <C-C><C-W>c
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => M.W. appends
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"set font :set guifont=Monospace\ 12
-set guifont=Ubuntu\ mono\ 13
-
-" set delay
-set timeoutlen=1000
-
-"show line number
-set number
-
 " emacsish keybindings
 noremap  <C-G> <Esc>
 vnoremap <C-G> <Esc>
@@ -407,34 +419,8 @@ vnoremap <C-Z> :
 snoremap <C-Z> :
 inoremap <C-Z> <C-O>:
 
-"show the command typing
-set showcmd
-
-"use dialog when file was not saved
-set confirm
-
-"inline replace
-set gdefault
-
-"set auto-complete
-set completeopt=longest,menu
-
-"share clipboard
-set clipboard+=unnamedplus
-
 "Change Y to yank to end of line
 map Y y$
-
-"set fold
-set foldenable
-set foldmethod=indent " marker " or manual
-
-"show the tabes
-set list
-set listchars=tab:\|\ ,trail:·,extends:#,nbsp:.
-
-"do not break words joined by the following characters
-set iskeyword+=_,@
 
 " paste over without overwriting register
 xnoremap p pgvy
@@ -444,50 +430,24 @@ xnoremap P Pgvy
 noremap ; :
 noremap : ;
 
-" make >> and << work better
-set shiftround
-
-" hightlight current line/col
-set cursorline
-set cursorcolumn
-
-" enable omni-completion
-set omnifunc=syntaxcomplete#Complete
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType perl set omnifunc=perlcomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType node set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType cpp set omnifunc=cppcomplete#Complete
-autocmd FileType c set omnifunc=ccomplete#Complete
-autocmd FileType d set omnifunc=ccomplete#Complete
-autocmd Filetype octave set omnifunc=syntaxcomplete#Complete
-autocmd FileType go set omnifunc=gocomplete#Complete
+" Quickly insert parenthesis/brackets/etc.:
+inoremap <leader>( ()<esc>i
+inoremap <leader>[ []<esc>i
+inoremap <leader>{ {}<esc>i
+inoremap <leader>' ''<esc>i
+inoremap <leader>" ""<esc>i
+inoremap <leader>` `'<esc>i
+inoremap <leader>~ ``"<esc>i
+inoremap <leader>$ $$<esc>i
+inoremap <leader>\| \|\|<esc>i
 
 " brackets
 inoremap <expr> <silent> ( MayCloseParentheses('(')
 inoremap <expr> <silent> [ MayCloseParentheses('[')
 inoremap <expr> <silent> { MayCloseParentheses('{')
 
-" encodeing just opened file.
-set fileencodings=utf8,gbk,ucs-bom,cp936,gb2312,gb18030,big5,euc-jp,euc-kr
-
-" commenting blocks of code.
-                                     let b:comment_leader = '// '
-autocmd FileType c,d,cpp,java,scala  let b:comment_leader = '// '
-autocmd FileType sh,ruby,python,text let b:comment_leader = '#  '
-autocmd FileType conf,fstab,perl     let b:comment_leader = '#  '
-autocmd FileType tex,octave          let b:comment_leader = '%  '
-autocmd FileType mail                let b:comment_leader = '>  '
-autocmd FileType vim                 let b:comment_leader = '"  '
-autocmd FileType lisp                let b:comment_leader = ';; '
-autocmd FileType haskell,vhdl,ada    let b:comment_leader = '-- '
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Helper functions
+" => Functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! CmdLine(str)
     exe "menu Foo.Bar :" . a:str
@@ -523,19 +483,19 @@ function! HasPaste()
 endfunction
 
 function! <SID>BufcloseCloseIt()
-   let l:currentBufNum = bufnr("%")
-   let l:alternateBufNum = bufnr("#")
-   if buflisted(l:alternateBufNum)
-     buffer #
-   else
-     bnext
-   endif
-   if bufnr("%") == l:currentBufNum
-     new
-   endif
-   if buflisted(l:currentBufNum)
-     execute("bdelete! ".l:currentBufNum)
-   endif
+    let l:currentBufNum = bufnr("%")
+    let l:alternateBufNum = bufnr("#")
+    if buflisted(l:alternateBufNum)
+      buffer #
+    else
+      bnext
+    endif
+    if bufnr("%") == l:currentBufNum
+      new
+    endif
+    if buflisted(l:currentBufNum)
+      execute("bdelete! ".l:currentBufNum)
+    endif
 endfunction
 
 function! DeleteTrailingWS()
