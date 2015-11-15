@@ -32,7 +32,7 @@ call plug#begin()
     " session and more
         Plug 'shougo/unite.vim'
     " YCM
-        Plug 'Valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive;./install.py' }
+        Plug 'Valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive;./install.py --gocode-completer' }
     " snippet
         Plug 'sirver/ultisnips'
         Plug 'honza/vim-snippets'
