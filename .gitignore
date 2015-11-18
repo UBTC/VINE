@@ -1,7 +1,7 @@
 .directory
 .netrwhist
 UltiSnips/
-autoload/plug.vim
+autoload/
 .custom.el
 .depend
 pyim/

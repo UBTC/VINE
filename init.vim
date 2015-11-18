@@ -9,7 +9,7 @@
 "     http://vim.cybermirror.org/runtime/mswin.vim
 " and many internet resources...
 "
-" Mogei Wang, 2015
+" COPYRIGHT, Mogei Wang, 2010-2015.
 " https://github.com/mogeiwang/vine
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -19,22 +19,44 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 call plug#begin()
-    " debugger
-        Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-        Plug 'idanarye/vim-vebugger', { 'on':  'VBGattachGDB' }
+    " surround
+        Plug 'tpope/vim-surround'
+    " exchange
+        Plug 'tommcdo/vim-exchange'
+    " multiple-cursors
+        Plug 'terryma/vim-multiple-cursors'
+    " auto-align
+        Plug 'junegunn/vim-easy-align'
+    " easy motion
+        Plug 'lokaltog/vim-easymotion'
+    " better repeater
+        Plug 'tpope/vim-repeat'
+    " line numbers
+        Plug 'myusuf3/numbers.vim'
     " colorscheme
         Plug 'tomasr/molokai'
     " resources
         Plug 'shougo/unite.vim'
+    " session and more
+        Plug 'mhinz/vim-startify'
     " YCM
-        Plug 'Valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive;./install.py --gocode-completer' }
+        Plug 'valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive;./install.py --gocode-completer' }
     " snippet
         Plug 'sirver/ultisnips'
         Plug 'honza/vim-snippets', { 'do': 'cp ~/.config/nvim/plugged/vim-snippets/UltiSnips/ ~/.config/nvim/' }
-    " tagbar --- use with exuberant-ctags
-        Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle', 'do': 'go get -u github.com/jstemmer/gotags' }
+    " syatastic
+       Plug 'scrooloose/syntastic'
+    " nerds
+        Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+        Plug 'scrooloose/nerdcommenter'
+    " debugger (, { 'on':  'VBGattachGDB' })
+        Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+        Plug 'idanarye/vim-vebugger'
+    " tagbar --- use with exuberant-ctags ( 'on':  'TagbarToggle', )
+       Plug 'majutsushi/tagbar', { 'do': 'go get -u github.com/jstemmer/gotags' }
     " golang
         Plug 'fatih/vim-go'
+        Plug 'nsf/gocode', { 'do': 'go get -u github.com/nsf/gocode;cp ~/.config/nvim/plugged/gocode/vim/autoload/gocomplete.vim ~/.nvim/autoload/' }
     " python
         Plug 'klen/python-mode'
     " latex
@@ -42,19 +64,26 @@ call plug#begin()
     " pandoc and markdown
         Plug 'vim-pandoc/vim-pandoc'
         Plug 'vim-pandoc/vim-pandoc-syntax'
-    " surround
-        Plug 'tpope/vim-surround'
-    " nerds
-        Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-        Plug 'scrooloose/nerdcommenter'
-    " go code complete
-        Plug 'nsf/gocode', { 'do': 'go get -u github.com/nsf/gocode;cp ~/.config/nvim/plugged/gocode/vim/autoload/gocomplete.vim ~/.nvim/autoload/' }
 call plug#end()
 
-"UltiSnips
+" UltiSnips
 let g:UltiSnipsExpandTrigger = '<M-Tab>'
 let g:UltiSnipsJumpForwardTrigger = '<Tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
+
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" EasyAlign (e.g. vipga, gaip)
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+
+" vim-repeat
+silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
 
 "Tagbar configuration for gotags
 let g:tagbar_type_go = {
@@ -189,7 +218,7 @@ set foldcolumn=1
 set showcmd
 
 " Try to keep the cursor line in the vertically center (27 lines)
-set scrolloff=100
+set scrolloff=3
 
 "Always show current position
 set ruler
@@ -220,8 +249,8 @@ endif
 set colorcolumn=+1
 hi ColorColumn NONE ctermbg=Cyan
 
-"set font :set guifont=Monospace\ 12
-set guifont=Ubuntu\ mono\ 13
+"set font
+set guifont=Ubuntu\ Mono\ 12
 
 " Format the status line
 set statusline=\ \%3cC\ \%4lL\ \%<\%p%%\%L\ \%8bA\ \%{HasPaste()}\ %3{HasLinewidth()}W\ NM\%=%n%m\%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\"}[%{&ff}][%r%h%w]\%F
@@ -311,20 +340,11 @@ inoremap <Up> <C-o>gk
 " Map \ to replace
 noremap \ :1,$s/%/ic
 
-" When you press <leader>/ you can search and replace the selected text
-vnoremap <silent> <leader>/ :call VisualSelection('replace', '')<CR>
-
 " Disable highlight when <leader>/ is pressed.
 noremap <silent> <leader>/ :noh<CR>
 
 " Del the tailing ^M (to work with MSDOS files)
 noremap <Leader>; mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
-
-" Smart way to move between windows
-noremap <C-j> <C-W>j
-noremap <C-k> <C-W>k
-noremap <C-h> <C-W>h
-noremap <C-l> <C-W>l
 
 " Don't close window, when deleting a buffer
 command! Bclose call <SID>BufcloseCloseIt()
@@ -340,11 +360,6 @@ nnoremap <M-j> mz:m+<CR>`z
 nnoremap <M-k> mz:m-2<CR>`z
 vnoremap <M-j> :m'>+<CR>`<my`>mzgv`yo`z
 vnoremap <M-k> :m'<-2<CR>`>my`<mzgv`yo`z
-
-" command line keybindings
-cnoremap <C-A> <Home>
-cnoremap <C-E> <End>
-cnoremap <C-K> d$
 
 " Delete trailing white spaces
 noremap <leader><BS> :%s/\s\+$//ge<CR>
@@ -391,14 +406,6 @@ inoremap <C-Del> <C-O>dw
 noremap  <C-S> :update<CR>
 vnoremap <C-S> <C-C>:update<CR>
 inoremap <C-S> <C-O>:update<CR>
-
-" CTRL-A is Select all
-noremap  <C-S-A> gggH<C-O>G
-inoremap <C-S-A> <C-O>gg<C-O>gH<C-O>G
-cnoremap <C-S-A> <C-C>gggH<C-O>G
-onoremap <C-S-A> <C-C>gggH<C-O>G
-snoremap <C-S-A> <C-C>gggH<C-O>G
-xnoremap <C-S-A> <C-C>ggVG
 
 " CTRL-F4 is Close window
 noremap <C-F4> <C-W>c
@@ -449,31 +456,6 @@ inoremap <expr> <silent> { MayCloseParentheses('{')
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! CmdLine(str)
-    exe "menu Foo.Bar :" . a:str
-    emenu Foo.Bar
-    unmenu Foo
-endfunction
-
-function! VisualSelection(direction, extra_filter) range
-    let l:saved_reg = @"
-    execute "normal! vgvy"
-    let l:pattern = escape(@", '\\/.*$^~[]')
-    let l:pattern = substitute(l:pattern, "\n$", "", "")
-    if a:direction == 'b'
-        execute "normal ?" . l:pattern . "^M"
-    elseif a:direction == 'replace'
-        call CmdLine("%s" . '/'. l:pattern . '/')
-    elseif a:direction == 'f'
-        execute "normal /" . l:pattern . "^M"
-    elseif a:direction == 'sl'
-        exe "/" . l:pattern
-        g//
-    endif
-    let @/ = l:pattern
-    let @" = l:saved_reg
-endfunction
-
 function! HasPaste()
     if &paste
         return 'MP'
@@ -590,11 +572,4 @@ function! EnvProcess()
     call append(1, b:comment_leader . "-*- coding:utf-8 -*-")
     call append(2, "")
     echohl WarningMsg | echo "env information added(gg check it)!" | echohl None
-endfunction
-
-function! MultiLineSearch(bang, ...)
-  if a:0 > 0
-    let sep = (a:bang) ? '\_W\+' : '\_s\+'
-    let @/ = join(a:000, sep)
-  endif
 endfunction
