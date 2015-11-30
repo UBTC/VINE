@@ -50,13 +50,12 @@ call plug#begin()
         Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
         Plug 'scrooloose/nerdcommenter'
     " debugger (, { 'on':  'VBGattachGDB' })
-        Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-        Plug 'idanarye/vim-vebugger'
-    " tagbar --- use with exuberant-ctags ( 'on':  'TagbarToggle', )
-       Plug 'majutsushi/tagbar', { 'do': 'go get -u github.com/jstemmer/gotags' }
+        Plug 'Shougo/vimproc.vim', { 'do': 'make; cp -r ~/.config/nvim/plugged/vimproc.vim/autoload ~/.config/nvim/; cp -r ~/.config/nvim/plugged/vimproc.vim/lib ~/.config/nvim/' }
+        Plug 'idanarye/vim-vebugger', { 'do': 'cp -r ~/.config/nvim/plugged/vim-vebugger/autoload ~/.config/nvim/' }
+        Plug 'majutsushi/tagbar', { 'do': 'go get -u github.com/jstemmer/gotags' }
     " golang
         Plug 'fatih/vim-go'
-        Plug 'nsf/gocode', { 'do': 'go get -u github.com/nsf/gocode;cp ~/.config/nvim/plugged/gocode/vim/autoload/gocomplete.vim ~/.nvim/autoload/' }
+        Plug 'nsf/gocode', { 'do': 'go get -u github.com/nsf/gocode; cp ~/.config/nvim/plugged/gocode/vim/autoload/gocomplete.vim ~/.config/nvim/autoload/' }
     " python
         Plug 'klen/python-mode'
     " latex
@@ -573,3 +572,4 @@ function! EnvProcess()
     call append(2, "")
     echohl WarningMsg | echo "env information added(gg check it)!" | echohl None
 endfunction
+
