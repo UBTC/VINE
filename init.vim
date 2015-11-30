@@ -316,15 +316,15 @@ autocmd Filetype octave set omnifunc=syntaxcomplete#Complete
 autocmd FileType go set omnifunc=gocomplete#Complete
 
 " commenting blocks of code.
-                                     let b:comment_leader = '// '
-autocmd FileType c,d,cpp,java,scala  let b:comment_leader = '// '
-autocmd FileType sh,ruby,python,text let b:comment_leader = '#  '
-autocmd FileType conf,fstab,perl     let b:comment_leader = '#  '
-autocmd FileType tex,octave          let b:comment_leader = '%  '
-autocmd FileType mail                let b:comment_leader = '>  '
-autocmd FileType vim                 let b:comment_leader = '"  '
-autocmd FileType lisp                let b:comment_leader = ';; '
-autocmd FileType haskell,vhdl,ada    let b:comment_leader = '-- '
+                                       let b:comment_leader = '// '
+autocmd FileType c,d,cpp,java,scala,go let b:comment_leader = '// '
+autocmd FileType sh,ruby,python,text   let b:comment_leader = '#  '
+autocmd FileType conf,fstab,perl       let b:comment_leader = '#  '
+autocmd FileType tex,octave            let b:comment_leader = '%  '
+autocmd FileType mail                  let b:comment_leader = '>  '
+autocmd FileType vim                   let b:comment_leader = '"  '
+autocmd FileType lisp                  let b:comment_leader = ';; '
+autocmd FileType haskell,vhdl,ada      let b:comment_leader = '-- '
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Keybindings
@@ -392,7 +392,7 @@ noremap <F9> :vsplit<CR><C-W>l:terminal 'fish'<CR>
 noremap <F10> :TagbarToggle<CR>
 
 "  F11: tags
-noremap <F11> :VBGattachGDB<CR>
+noremap <F11> :VBGstartGDB
 
 "  F12 attach copyright things
 noremap <F12> :call CopyrightAdd()<CR>:call EnvProcess()<CR>
