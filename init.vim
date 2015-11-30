@@ -52,6 +52,7 @@ call plug#begin()
     " debugger (, { 'on':  'VBGattachGDB' })
         Plug 'Shougo/vimproc.vim', { 'do': 'make; cp -r ~/.config/nvim/plugged/vimproc.vim/autoload ~/.config/nvim/; cp -r ~/.config/nvim/plugged/vimproc.vim/lib ~/.config/nvim/' }
         Plug 'idanarye/vim-vebugger', { 'do': 'cp -r ~/.config/nvim/plugged/vim-vebugger/autoload ~/.config/nvim/' }
+    " tagbar --- use with exuberant-ctags ( 'on':  'TagbarToggle', ) 
         Plug 'majutsushi/tagbar', { 'do': 'go get -u github.com/jstemmer/gotags' }
     " golang
         Plug 'fatih/vim-go'
@@ -572,4 +573,3 @@ function! EnvProcess()
     call append(2, "")
     echohl WarningMsg | echo "env information added(gg check it)!" | echohl None
 endfunction
-
