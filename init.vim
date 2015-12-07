@@ -234,7 +234,7 @@ set cursorcolumn
 set cmdheight=2
 
 " colorscheme and background
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 colorscheme molokai
 set t_co=256
 set background=dark
@@ -247,7 +247,7 @@ endif
 
 " colors
 set colorcolumn=+1
-hi ColorColumn NONE ctermbg=Cyan
+" hi ColorColumn NONE ctermbg=Cyan
 
 "set font
 set guifont=Ubuntu\ Mono\ 12
