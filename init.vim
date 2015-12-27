@@ -52,7 +52,7 @@ call plug#begin()
     " debugger (, { 'on':  'VBGattachGDB' })
         Plug 'Shougo/vimproc.vim', { 'do': 'make; cp -r ~/.config/nvim/plugged/vimproc.vim/autoload ~/.config/nvim/; cp -r ~/.config/nvim/plugged/vimproc.vim/lib ~/.config/nvim/' }
         Plug 'idanarye/vim-vebugger', { 'do': 'cp -r ~/.config/nvim/plugged/vim-vebugger/autoload ~/.config/nvim/' }
-    " tagbar --- use with exuberant-ctags ( 'on':  'TagbarToggle', ) 
+    " tagbar --- use with exuberant-ctags ( 'on':  'TagbarToggle', )
         Plug 'majutsushi/tagbar', { 'do': 'go get -u github.com/jstemmer/gotags' }
     " golang
         Plug 'fatih/vim-go'
@@ -84,6 +84,10 @@ nmap ga <Plug>(EasyAlign)
 
 " vim-repeat
 silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
+
+"vim-go
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
 "Tagbar configuration for gotags
 let g:tagbar_type_go = {
@@ -128,8 +132,9 @@ let g:mapleader = ","
 syntax enable
 
 "set fold
-set foldenable
-set foldmethod=indent " marker " or manual
+set foldmethod=expr " syntax, indent, marker, manual, expr ...
+set foldexpr=empty(getline(v:lnum))?'=':indent(v:lnum)/4
+set foldlevel=1
 
 " set line break
 set linebreak
@@ -234,7 +239,7 @@ set cursorcolumn
 set cmdheight=2
 
 " colorscheme and background
-" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 colorscheme molokai
 set t_co=256
 set background=dark
@@ -247,7 +252,7 @@ endif
 
 " colors
 set colorcolumn=+1
-" hi ColorColumn NONE ctermbg=Cyan
+"hi ColorColumn NONE ctermbg=Cyan
 
 "set font
 set guifont=Ubuntu\ Mono\ 12
