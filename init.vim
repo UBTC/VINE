@@ -132,9 +132,8 @@ let g:mapleader = ","
 syntax enable
 
 "set fold
-set foldmethod=expr " syntax, indent, marker, manual, expr ...
-set foldexpr=empty(getline(v:lnum))?'=':indent(v:lnum)/4
-set foldlevel=1
+set foldenable
+set foldmethod=marker " syntax, indent, marker, manual, expr ...
 
 " set line break
 set linebreak
@@ -217,7 +216,7 @@ set t_vb=
 set tm=500
 
 " Add a bit extra margin to the left
-set foldcolumn=1
+set foldcolumn=3
 
 "show the command typing
 set showcmd
