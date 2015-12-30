@@ -133,7 +133,8 @@ syntax enable
 
 "set fold
 set foldenable
-set foldmethod=marker " syntax, indent, marker, manual, expr ...
+set foldmethod=indent " syntax, indent, marker, manual, expr ...
+set foldlevel=2
 
 " set line break
 set linebreak
@@ -238,7 +239,7 @@ set cursorcolumn
 set cmdheight=2
 
 " colorscheme and background
-"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 colorscheme molokai
 set t_co=256
 set background=dark
