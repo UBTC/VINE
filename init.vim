@@ -10,9 +10,19 @@
 " and many internet resources...
 "
 " COPYRIGHT, Mogei Wang, 2010-2015.
-" https://github.com/mogeiwang/vine
+" https://github.com/ubtc/vine
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Init
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" replace system's fish shell. run sh cmd with :! or :r!
+set shell=/bin/bash
+
+" use Space as the leader
+let mapleader = ","
+let g:mapleader = ","
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
@@ -31,16 +41,19 @@ call plug#begin()
         Plug 'lokaltog/vim-easymotion'
     " better repeater
         Plug 'tpope/vim-repeat'
-    " line numbers
-        Plug 'myusuf3/numbers.vim'
-    " colorscheme
+    " user interface
         Plug 'tomasr/molokai'
+        Plug 'junegunn/goyo.vim'
     " resources
         Plug 'shougo/unite.vim'
+        Plug 'codepiano/ctrlp.vim'
     " session and more
         Plug 'mhinz/vim-startify'
-    " YCM
+        Plug 'xolox/vim-misc'
+        Plug 'xolox/vim-session'
+    " auto completion
         Plug 'valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive;./install.py --gocode-completer' }
+        Plug 'ervandew/supertab'
     " snippet
         Plug 'sirver/ultisnips'
         Plug 'honza/vim-snippets', { 'do': 'cp ~/.config/nvim/plugged/vim-snippets/UltiSnips/ ~/.config/nvim/' }
@@ -71,6 +84,17 @@ let g:UltiSnipsExpandTrigger = '<M-Tab>'
 let g:UltiSnipsJumpForwardTrigger = '<Tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
 
+" Ctrl-P
+let g:ctrlp_map = '<c-q>'
+let g:ctrlp_cmd = 'CtrlP'
+
+" sessions
+let g:session_directory = '~/.config/nvim/sessions'
+let g:session_autosave = 'no'
+
+" goyo
+nnoremap <Leader>m :Goyo<CR>
+
 " syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -84,6 +108,10 @@ nmap ga <Plug>(EasyAlign)
 
 " vim-repeat
 silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
+
+" easy motion
+nmap s <Plug>(easymotion-s)
+nmap t <Plug>(easymotion-t)
 
 "vim-go
 let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
@@ -121,20 +149,12 @@ let g:tagbar_type_go = {
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Mode
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" replace system's fish shell. run sh cmd with :! or :r!
-set shell=/bin/bash
-
-" use Space as the leader
-let mapleader = ","
-let g:mapleader = ","
-
 " Enable syntax highlighting
 syntax enable
 
 "set fold
-set foldenable
 set foldmethod=indent " syntax, indent, marker, manual, expr ...
-set foldlevel=2
+set foldlevel=10
 
 " set line break
 set linebreak
