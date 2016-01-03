@@ -59,6 +59,8 @@ call plug#begin()
         Plug 'honza/vim-snippets', { 'do': 'cp ~/.config/nvim/plugged/vim-snippets/UltiSnips/ ~/.config/nvim/' }
     " syatastic
        Plug 'scrooloose/syntastic'
+    " a better cmdline
+       Plug 'gelguy/Cmd2.vim'
     " nerds
         Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
         Plug 'scrooloose/nerdcommenter'
@@ -94,6 +96,10 @@ let g:session_autosave = 'no'
 
 " goyo
 nnoremap <Leader>m :Goyo<CR>
+
+" cmd2
+nmap : :<Plug>(Cmd2Suggest)
+nmap / /<Plug>(Cmd2Suggest)
 
 " syntastic
 set statusline+=%#warningmsg#
