@@ -9,7 +9,7 @@
 "     http://vim.cybermirror.org/runtime/mswin.vim
 " and many internet resources...
 "
-" COPYRIGHT, Mogei Wang, 2010-2015.
+" COPYRIGHT, Mogei Wang, 2010-2016.
 " https://github.com/ubtc/vine
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -94,11 +94,16 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:session_directory = '~/.config/nvim/sessions'
 let g:session_autosave = 'no'
 
-" goyo
-nnoremap <Leader>m :Goyo<CR>
+" easy motion
+nmap <leader>m <Plug>(easymotion-s)
+" nmap <....>. <Plug>(easymotion-t)
+
+" vim-debugger
+let g:vebugger_leader='<c-c>'
+let g:vebugger_view_source_cmd='edit'
 
 " cmd2
-nmap : :<Plug>(Cmd2Suggest)
+" nmap : :<Plug>(Cmd2Suggest)
 nmap / /<Plug>(Cmd2Suggest)
 
 " syntastic
@@ -114,10 +119,6 @@ nmap ga <Plug>(EasyAlign)
 
 " vim-repeat
 silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
-
-" easy motion
-nmap s <Plug>(easymotion-s)
-nmap t <Plug>(easymotion-t)
 
 "vim-go
 let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
@@ -419,13 +420,15 @@ noremap <F8> :NERDTreeToggle<CR>
 " F9: open terminal
 noremap <F9> :vsplit<CR><C-W>l:terminal 'fish'<CR>
 
-" F10: start the debugger
+" F10: tags
 noremap <F10> :TagbarToggle<CR>
 
-"  F11: tags
-noremap <F11> :VBGstartGDB
+" F11: start the debugger
+"noremap <F11> :VBGstartGDB
+" F11: be focus
+nnoremap <F11> :Goyo<CR>
 
-"  F12 attach copyright things
+" F12 attach copyright things
 noremap <F12> :call CopyrightAdd()<CR>:call EnvProcess()<CR>
 
 " backspace in Visual mode deletes selection
