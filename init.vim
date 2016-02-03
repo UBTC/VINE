@@ -100,7 +100,7 @@ nmap <leader>m <Plug>(easymotion-s)
 
 " vim-debugger
 let g:vebugger_leader='<c-c>'
-let g:vebugger_view_source_cmd='edit'
+"let g:vebugger_view_source_cmd='edit'
 
 " cmd2
 " nmap : :<Plug>(Cmd2Suggest)
@@ -267,9 +267,10 @@ set cmdheight=2
 
 " colorscheme and background
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-colorscheme molokai
-set t_co=256
+colorscheme molokai " desert
+" set t_co=256
 set background=dark
+set t_ut=
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -411,8 +412,8 @@ noremap <F6> :setlocal spell!<CR>
 
 " F7: build something
 au FileType go nmap <F7> <Plug>(go-build)
-au FileType tex nmap <F7> :xelatex %<CR>
-au FileType markdown nmap <F7> :pandoc -f markdown+lhs % -o markdown.html -t dzslides -i -s -S --toc<CR>
+au FileType tex nmap <F7> :!xelatex %<CR>
+au FileType markdown nmap <F7> :!pandoc -f markdown+lhs % -o markdown.html -t dzslides -i -s -S --toc<CR>
 
 " F8: open vim file explorer
 noremap <F8> :NERDTreeToggle<CR>
