@@ -72,6 +72,8 @@ call plug#begin()
     " golang
         Plug 'fatih/vim-go'
         Plug 'nsf/gocode', { 'do': 'go get -u github.com/nsf/gocode; cp ~/.config/nvim/plugged/gocode/vim/autoload/gocomplete.vim ~/.config/nvim/autoload/' }
+    " julia
+        Plug 'JuliaLang/julia-vim'
     " python
         Plug 'klen/python-mode'
     " latex
