@@ -268,7 +268,7 @@ set cursorcolumn
 set cmdheight=2
 
 " colorscheme and background
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 colorscheme molokai " desert
 " set t_co=256
 set background=dark
