@@ -81,6 +81,8 @@ call plug#begin()
     " pandoc and markdown
         Plug 'vim-pandoc/vim-pandoc'
         Plug 'vim-pandoc/vim-pandoc-syntax'
+    " Vim's Org-Mode
+        Plug 'jceb/vim-orgmode'
 call plug#end()
 
 " UltiSnips
@@ -268,7 +270,7 @@ set cursorcolumn
 set cmdheight=2
 
 " colorscheme and background
-" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 colorscheme molokai " desert
 " set t_co=256
 set background=dark
