@@ -18,7 +18,7 @@
 " => Init
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " replace system's fish shell. run sh cmd with :! or :r!
-set shell=/bin/bash
+set shell=/bin/zsh
 
 " use Space as the leader
 let mapleader = ","
@@ -423,7 +423,7 @@ au FileType markdown nmap <F7> :!pandoc -f markdown+lhs % -o markdown.html -t dz
 noremap <F8> :NERDTreeToggle<CR>
 
 " F9: open terminal
-noremap <F9> :vsplit<CR><C-W>l:terminal 'fish'<CR>
+noremap <F9> :vsplit<CR><C-W>l:terminal 'zsh'<CR>
 
 " F10: tags
 noremap <F10> :TagbarToggle<CR>
@@ -600,7 +600,7 @@ function! EnvProcess()
     if &filetype == 'tex'
         call append(0, b:comment_leader . "!/usr/bin/env pdflatex")
     elseif &filetype == 'sh'
-        call append(0, b:comment_leader . "!/usr/bin/env bash")
+        call append(0, b:comment_leader . "!/usr/bin/env zsh")
     elseif &filetype == 'python' || &filetype == 'py'
         call append(0, b:comment_leader . "!/usr/bin/env python")
     elseif &filetype == 'octave' || &filetype == 'm'
