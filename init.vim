@@ -423,7 +423,7 @@ au FileType markdown nmap <F7> :!pandoc -f markdown+lhs % -o markdown.html -t dz
 noremap <F8> :NERDTreeToggle<CR>
 
 " F9: open terminal
-noremap <F9> :vsplit<CR><C-W>l:terminal 'zsh'<CR>
+noremap <F9> :vsplit<CR><C-W>l:terminal 'fsh'<CR>
 
 " F10: tags
 noremap <F10> :TagbarToggle<CR>
