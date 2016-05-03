@@ -600,7 +600,7 @@ function! EnvProcess()
     if &filetype == 'tex'
         call append(0, b:comment_leader . "!/usr/bin/env pdflatex")
     elseif &filetype == 'sh'
-        call append(0, b:comment_leader . "!/usr/bin/env zsh")
+        call append(0, b:comment_leader . "!/usr/bin/env fish")
     elseif &filetype == 'python' || &filetype == 'py'
         call append(0, b:comment_leader . "!/usr/bin/env python")
     elseif &filetype == 'octave' || &filetype == 'm'
