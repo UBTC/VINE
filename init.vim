@@ -1,6 +1,6 @@
 " VINE """""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
-" Vim Imitating Neo Emacs --- my NeoVim configuration
+" Vim Imitating Neo Emacs --- my [neo]Vim configuration
 "     for processing tex/pdf, and coding in Golang & Python
 "
 " Based on Amir Salihefendic's basic.vimrc
@@ -423,7 +423,7 @@ au FileType markdown nmap <F7> :!pandoc -f markdown+lhs % -o markdown.html -t dz
 noremap <F8> :NERDTreeToggle<CR>
 
 " F9: open terminal
-noremap <F9> :vsplit<CR><C-W>l:terminal 'fsh'<CR>
+noremap <F9> :vsplit<CR><C-W>l:terminal 'fish'<CR>
 
 " F10: tags
 noremap <F10> :TagbarToggle<CR>
