@@ -7,7 +7,7 @@
 "     https://github.com/amix/vimrc
 " Bram Moolenaar's mswin.vim
 "     http://vim.cybermirror.org/runtime/mswin.vim
-" and many internet resources...
+" and many other internet resources.
 "
 " COPYRIGHT, Mogei Wang, 2010-2016.
 " https://github.com/ubtc/vine
@@ -17,10 +17,21 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Init
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" necesary for lots of cool vim things
 set nocompatible
 
 " replace system's fish shell. run sh cmd with :! or :r!
 set shell=/bin/zsh
+
+" Sets how many lines of history VIM has to remember
+set history=1000
+
+" Enable filetype plugins
+filetype plugin on
+filetype indent on
+
+" Set to auto read when a file is changed from the outside
+set autoread
 
 " set the leader
 let mapleader = ","
@@ -174,6 +185,9 @@ set linebreak
 set textwidth=0
 set wrapmargin=0
 
+" Turn on the WiLd menu
+set wildmenu
+
 " command-line completion
 set wildmode=longest:full,full
 
@@ -289,13 +303,15 @@ set t_ut=
 
 " Set extra options when running in GUI mode
 if has("gui_running")
-    set guioptions-=T,e
+    set guioptions-=T
+    set guioptions-=e
+    set t_Co=256
     set guitablabel=%M\ %t
 endif
 
 " colors
 set colorcolumn=+1
-"hi ColorColumn NONE ctermbg=Cyan
+hi ColorColumn NONE ctermbg=Cyan
 
 "set font
 set guifont=Ubuntu\ Mono\ 12
@@ -330,12 +346,16 @@ endif
 "set backupdir=/home/mw/.vim/backup
 set directory=/home/mw/.vim/tmp
 
+" Set utf8 as standard encoding, and en_US as the standard language
+set encoding=utf8
+set termencoding=utf8
+
 " encodeing just opened file.
 set fileencodings=utf8,gbk,ucs-bom,cp936,gb2312,gb18030,big5,euc-jp,euc-kr
 
 " Return to last edit position when opening files (You want this!)
 autocmd BufReadPost *
-    \ exec ":call CopyrightUpdate()" |
+    \ exec ":call UpdateCopyright()" |
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \ exe "normal! g`\"" |
     \ exe "normal! zz" |
@@ -343,7 +363,7 @@ autocmd BufReadPost *
 
 " Automatically update copyright notice with current year
 autocmd BufWritePre *
-    \ exec ":call CopyrightUpdate()" |
+    \ exec ":call UpdateCopyright()" |
     \ exec ":call DeleteTrailingWS()" |
     \ let &backupext = '.v-' . strftime("%Y%m%d-%H%M%S")
 
@@ -445,7 +465,7 @@ noremap <F10> :TagbarToggle<CR>
 nnoremap <F11> :Goyo<CR>
 
 " F12 attach copyright things
-noremap <F12> :call CopyrightAdd()<CR>:call EnvProcess()<CR>
+noremap <F12> :call AddCopyright()<CR>:call ProcessEnv()<CR>
 
 " backspace in Visual mode deletes selection
 vnoremap <BS> d
@@ -564,7 +584,7 @@ function! HasLinewidth()
     endif
 endfunction
 
-function! CopyrightAdd()
+function! AddCopyright()
     call append(0, b:comment_leader . "==============================================")
     call append(1, b:comment_leader . "·")
     call append(2, b:comment_leader . "· Author: Mogei Wang")
@@ -582,7 +602,7 @@ function! CopyrightAdd()
     echohl WarningMsg | echo "copyright information added." | echohl None
 endfunction
 
-function! CopyrightUpdate()
+function! UpdateCopyright()
     let n=1
     while n < 20
         let line = getline(n)
@@ -598,7 +618,7 @@ function! CopyrightUpdate()
     echohl WarningMsg | echo "no copyright information found." | echohl None
 endfunction
 
-function! EnvProcess()
+function! ProcessEnv()
     let n=1
     while n < 3
         let line = getline(n)
