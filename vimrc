@@ -344,7 +344,7 @@ endif
 " Turn backup on. Need to build these folders manually.
 "set backup
 "set backupdir=/home/mw/.vim/backup
-set directory=/home/mw/.vim/tmp
+"set directory=/home/mw/.vim/tmp
 
 " Set utf8 as standard encoding, and en_US as the standard language
 set encoding=utf8
