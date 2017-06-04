@@ -153,7 +153,7 @@ let g:tagbar_type_go = {
         \ 'ctype' : 't',
         \ 'ntype' : 'n'
     \ },
-    \ 'ctagsbin'  : '~/goWork/bin/gotags',
+    \ 'ctagsbin'  : '~/golang/bin/gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
