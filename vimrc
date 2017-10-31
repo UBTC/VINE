@@ -9,7 +9,7 @@
 "     http://vim.cybermirror.org/runtime/mswin.vim
 " and many other internet resources.
 "
-" COPYRIGHT, Mogei Wang, 2010-2016.
+" COPYRIGHT, Mogei Wang, 2010-2017.
 " https://github.com/ubtc/vine
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -40,135 +40,135 @@ let g:mapleader = ","
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"  curl -fLo ~/.vim/autoload/plug.vim --create-dirs 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-call plug#begin()
-    " surround
-        Plug 'tpope/vim-surround'
-    " exchange
-        Plug 'tommcdo/vim-exchange'
-    " multiple-cursors
-        Plug 'terryma/vim-multiple-cursors'
-    " auto-align
-        Plug 'junegunn/vim-easy-align'
-    " easy motion
-        Plug 'lokaltog/vim-easymotion'
-    " better repeater
-        Plug 'tpope/vim-repeat'
-    " user interface
-        Plug 'tomasr/molokai'
-        Plug 'junegunn/goyo.vim'
-    " resources
-        Plug 'shougo/unite.vim'
-        Plug 'codepiano/ctrlp.vim'
-    " session and more
-        Plug 'mhinz/vim-startify'
-        Plug 'xolox/vim-misc'
-        Plug 'xolox/vim-session'
-    " auto completion
-        Plug 'valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive;./install.py --gocode-completer' }
-        Plug 'ervandew/supertab'
-    " snippet
-        Plug 'sirver/ultisnips'
-        Plug 'honza/vim-snippets', { 'do': 'cp ~/.vim/plugged/vim-snippets/UltiSnips/ ~/.vim/' }
-    " syatastic
-       Plug 'scrooloose/syntastic'
-    " a better cmdline
-       " Plug 'gelguy/Cmd2.vim'
-    " nerds
-        Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-        Plug 'scrooloose/nerdcommenter'
-    " debugger (, { 'on':  'VBGattachGDB' })
-        Plug 'Shougo/vimproc.vim', { 'do': 'make; cp -r ~/.vim/plugged/vimproc.vim/autoload ~/.vim/; cp -r ~/.vim/plugged/vimproc.vim/lib ~/.vim/' }
-        Plug 'idanarye/vim-vebugger', { 'do': 'cp -r ~/.vim/plugged/vim-vebugger/autoload ~/.vim/' }
-    " tagbar --- use with exuberant-ctags ( 'on':  'TagbarToggle', )
-        Plug 'majutsushi/tagbar', { 'do': 'go get -u github.com/jstemmer/gotags' }
-    " golang
-        Plug 'fatih/vim-go'
-        Plug 'nsf/gocode', { 'do': 'go get -u github.com/nsf/gocode; cp ~/.vim/plugged/gocode/vim/autoload/gocomplete.vim ~/.vim/autoload/' }
-    " julia
-        " Plug 'JuliaLang/julia-vim'
-    " python
-        Plug 'klen/python-mode'
-    " latex
-        Plug 'gerw/vim-latex-suite'
-    " pandoc and markdown
-        Plug 'vim-pandoc/vim-pandoc'
-        Plug 'vim-pandoc/vim-pandoc-syntax'
-    " Vim's Org-Mode
-        Plug 'jceb/vim-orgmode'
-call plug#end()
+""  curl -fLo ~/.vim/autoload/plug.vim --create-dirs 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+"call plug#begin()
+    "" surround
+        "Plug 'tpope/vim-surround'
+    "" exchange
+        "Plug 'tommcdo/vim-exchange'
+    "" multiple-cursors
+        "Plug 'terryma/vim-multiple-cursors'
+    "" auto-align
+        "Plug 'junegunn/vim-easy-align'
+    "" easy motion
+        "Plug 'lokaltog/vim-easymotion'
+    "" better repeater
+        "Plug 'tpope/vim-repeat'
+    "" user interface
+        "Plug 'tomasr/molokai'
+        "Plug 'junegunn/goyo.vim'
+    "" resources
+        "Plug 'shougo/unite.vim'
+        "Plug 'codepiano/ctrlp.vim'
+    "" session and more
+        "Plug 'mhinz/vim-startify'
+        "Plug 'xolox/vim-misc'
+        "Plug 'xolox/vim-session'
+    "" auto completion
+        "Plug 'valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive;./install.py --gocode-completer' }
+        "Plug 'ervandew/supertab'
+    "" snippet
+        "Plug 'sirver/ultisnips'
+        "Plug 'honza/vim-snippets', { 'do': 'cp ~/.vim/plugged/vim-snippets/UltiSnips/ ~/.vim/' }
+    "" syatastic
+       "Plug 'scrooloose/syntastic'
+    "" a better cmdline
+       "" Plug 'gelguy/Cmd2.vim'
+    "" nerds
+        "Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+        "Plug 'scrooloose/nerdcommenter'
+    "" debugger (, { 'on':  'VBGattachGDB' })
+        "Plug 'Shougo/vimproc.vim', { 'do': 'make; cp -r ~/.vim/plugged/vimproc.vim/autoload ~/.vim/; cp -r ~/.vim/plugged/vimproc.vim/lib ~/.vim/' }
+        "Plug 'idanarye/vim-vebugger', { 'do': 'cp -r ~/.vim/plugged/vim-vebugger/autoload ~/.vim/' }
+    "" tagbar --- use with exuberant-ctags ( 'on':  'TagbarToggle', )
+        "Plug 'majutsushi/tagbar', { 'do': 'go get -u github.com/jstemmer/gotags' }
+    "" golang
+        "Plug 'fatih/vim-go'
+        "Plug 'nsf/gocode', { 'do': 'go get -u github.com/nsf/gocode; cp ~/.vim/plugged/gocode/vim/autoload/gocomplete.vim ~/.vim/autoload/' }
+    "" julia
+        "" Plug 'JuliaLang/julia-vim'
+    "" python
+        "Plug 'klen/python-mode'
+    "" latex
+        "Plug 'gerw/vim-latex-suite'
+    "" pandoc and markdown
+        "Plug 'vim-pandoc/vim-pandoc'
+        "Plug 'vim-pandoc/vim-pandoc-syntax'
+    "" Vim's Org-Mode
+        "Plug 'jceb/vim-orgmode'
+"call plug#end()
 
-" UltiSnips
-let g:UltiSnipsExpandTrigger = '<M-Tab>'
-let g:UltiSnipsJumpForwardTrigger = '<Tab>'
-let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
+"" UltiSnips
+"let g:UltiSnipsExpandTrigger = '<M-Tab>'
+"let g:UltiSnipsJumpForwardTrigger = '<Tab>'
+"let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
 
-" Ctrl-P
-let g:ctrlp_map = '<c-q>'
-let g:ctrlp_cmd = 'CtrlP'
+"" Ctrl-P
+"let g:ctrlp_map = '<c-q>'
+"let g:ctrlp_cmd = 'CtrlP'
 
-" sessions
-let g:session_directory = '~/.vim/sessions'
-let g:session_autosave = 'no'
+"" sessions
+"let g:session_directory = '~/.vim/sessions'
+"let g:session_autosave = 'no'
 
-" easy motion
-nmap <leader>m <Plug>(easymotion-s)
-" nmap <....>. <Plug>(easymotion-t)
+"" easy motion
+"nmap <leader>m <Plug>(easymotion-s)
+"" nmap <....>. <Plug>(easymotion-t)
 
-" vim-debugger
-let g:vebugger_leader='<c-c>'
-"let g:vebugger_view_source_cmd='edit'
+"" vim-debugger
+"let g:vebugger_leader='<c-c>'
+""let g:vebugger_view_source_cmd='edit'
 
-" cmd2
-"nmap : :<Plug>(Cmd2Suggest)
-"nmap / /<Plug>(Cmd2Suggest)
+"" cmd2
+""nmap : :<Plug>(Cmd2Suggest)
+""nmap / /<Plug>(Cmd2Suggest)
 
-" syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+"" syntastic
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
 
-" EasyAlign (e.g. vipga, gaip)
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
+"" EasyAlign (e.g. vipga, gaip)
+"xmap ga <Plug>(EasyAlign)
+"nmap ga <Plug>(EasyAlign)
 
-" vim-repeat
-silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
+"" vim-repeat
+"silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
 
-"vim-go
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+""vim-go
+"let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+"let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
-"Tagbar configuration for gotags
-let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : '~/golang/bin/gotags',
-    \ 'ctagsargs' : '-sort -silent'
-\ }
+""Tagbar configuration for gotags
+"let g:tagbar_type_go = {
+    "\ 'ctagstype' : 'go',
+    "\ 'kinds'     : [
+        "\ 'p:package',
+        "\ 'i:imports:1',
+        "\ 'c:constants',
+        "\ 'v:variables',
+        "\ 't:types',
+        "\ 'n:interfaces',
+        "\ 'w:fields',
+        "\ 'e:embedded',
+        "\ 'm:methods',
+        "\ 'r:constructor',
+        "\ 'f:functions'
+    "\ ],
+    "\ 'sro' : '.',
+    "\ 'kind2scope' : {
+        "\ 't' : 'ctype',
+        "\ 'n' : 'ntype'
+    "\ },
+    "\ 'scope2kind' : {
+        "\ 'ctype' : 't',
+        "\ 'ntype' : 'n'
+    "\ },
+    "\ 'ctagsbin'  : '~/golang/bin/gotags',
+    "\ 'ctagsargs' : '-sort -silent'
+"\ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Mode
@@ -197,7 +197,7 @@ set formatoptions+=n
 
 "show the tabes
 set list
-set listchars=tab:\|\ ,trail:·,extends:#,nbsp:.
+set listchars=tab:\|\ ,trail:.,extends:#,nbsp:.
 
 "do not break words joined by the following characters
 set iskeyword+=_,@
@@ -296,7 +296,7 @@ set cmdheight=2
 
 " colorscheme and background
 let $VIM_TUI_ENABLE_TRUE_COLOR=1
-colorscheme molokai
+colorscheme desert
 " set t_co=256
 set background=dark
 set t_ut=
@@ -314,7 +314,7 @@ set colorcolumn=+1
 hi ColorColumn NONE ctermbg=Cyan
 
 "set font
-set guifont=Ubuntu\ Mono\ 12
+set guifont=DejaVu_Sans_Mono:h12
 
 " Format the status line
 set statusline=\ \%3cC\ \%4lL\ \%<\%p%%\%L\ \%8bA\ \%{HasPaste()}\ %3{HasLinewidth()}W\ NM\%=%n%m\%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\"}[%{&ff}][%r%h%w]\%F
@@ -349,6 +349,13 @@ endif
 " Set utf8 as standard encoding, and en_US as the standard language
 set encoding=utf8
 set termencoding=utf8
+
+"Chinese vim menus (windows)
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
+
+"Chinese vim messages (windows)
+language messages zh_CN.utf-8
 
 " encodeing just opened file.
 set fileencodings=utf8,gbk,ucs-bom,cp936,gb2312,gb18030,big5,euc-jp,euc-kr
@@ -587,9 +594,9 @@ endfunction
 function! AddCopyright()
     call append(0, b:comment_leader . "==============================================")
     call append(1, b:comment_leader . "·")
-    call append(2, b:comment_leader . "· Author: Mogei Wang")
+    call append(2, b:comment_leader . "· Author: Maoji Wang")
     call append(3, b:comment_leader . "·")
-    call append(4, b:comment_leader . "· MogeiWang@GMail.com")
+    call append(4, b:comment_leader . "· maoji.wang@cs.nyu.edu")
     call append(5, b:comment_leader . "·")
     call append(6, b:comment_leader . "· Filename: ".expand("%:t"))
     call append(7, b:comment_leader . "·")
