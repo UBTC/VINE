@@ -7,9 +7,9 @@
 "     https://github.com/amix/vimrc
 " Bram Moolenaar's mswin.vim
 "     http://vim.cybermirror.org/runtime/mswin.vim
-" and many internet resources...
+" and many other internet resources.
 "
-" COPYRIGHT, Mogei Wang, 2010-2016.
+" COPYRIGHT, M Wang, 2010-2018
 " https://github.com/ubtc/vine
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -59,8 +59,6 @@ call plug#begin()
         Plug 'honza/vim-snippets', { 'do': 'cp ~/.config/nvim/plugged/vim-snippets/UltiSnips/ ~/.config/nvim/' }
     " syatastic
        Plug 'scrooloose/syntastic'
-    " a better cmdline
-       Plug 'gelguy/Cmd2.vim'
     " nerds
         Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
         Plug 'scrooloose/nerdcommenter'
@@ -72,8 +70,6 @@ call plug#begin()
     " golang
         Plug 'fatih/vim-go'
         Plug 'nsf/gocode', { 'do': 'go get -u github.com/nsf/gocode; cp ~/.config/nvim/plugged/gocode/vim/autoload/gocomplete.vim ~/.config/nvim/autoload/' }
-    " julia
-        Plug 'JuliaLang/julia-vim'
     " python
         Plug 'klen/python-mode'
     " latex
@@ -106,10 +102,6 @@ nmap <leader>m <Plug>(easymotion-s)
 let g:vebugger_leader='<c-c>'
 "let g:vebugger_view_source_cmd='edit'
 
-" cmd2
-" nmap : :<Plug>(Cmd2Suggest)
-nmap / /<Plug>(Cmd2Suggest)
-
 " syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -124,11 +116,11 @@ nmap ga <Plug>(EasyAlign)
 " vim-repeat
 silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
 
-"vim-go
+" vim-go
 let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
-"Tagbar configuration for gotags
+" Tagbar configuration for gotags
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
     \ 'kinds'     : [
@@ -156,6 +148,10 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : '~/golang/bin/gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
+
+" pymode
+let g:pymode_rope_lookup_project = 0
+let g:pymode_rope = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Mode
@@ -315,8 +311,8 @@ else
 endif
 
 " Turn backup on. Need to build these folders manually.
-set backup
-set backupdir=/home/mw/.config/nvim/backup
+"set backup
+"set backupdir=/home/mw/.config/nvim/backup
 set directory=/home/mw/.config/nvim/tmp
 
 " encodeing just opened file.
@@ -324,7 +320,7 @@ set fileencodings=utf8,gbk,ucs-bom,cp936,gb2312,gb18030,big5,euc-jp,euc-kr
 
 " Return to last edit position when opening files (You want this!)
 autocmd BufReadPost *
-    \ exec ":call CopyrightUpdate()" |
+    \ exec ":call UpdateCopyright()" |
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \ exe "normal! g`\"" |
     \ exe "normal! zz" |
@@ -332,7 +328,7 @@ autocmd BufReadPost *
 
 " Automatically update copyright notice with current year
 autocmd BufWritePre *
-    \ exec ":call CopyrightUpdate()" |
+    \ exec ":call UpdateCopyright()" |
     \ exec ":call DeleteTrailingWS()" |
     \ let &backupext = '.v-' . strftime("%Y%m%d-%H%M%S")
 
@@ -434,7 +430,7 @@ noremap <F10> :TagbarToggle<CR>
 nnoremap <F11> :Goyo<CR>
 
 " F12 attach copyright things
-noremap <F12> :call CopyrightAdd()<CR>:call EnvProcess()<CR>
+noremap <F12> :call AddCopyright()<CR>:call ProcessEnv()<CR>
 
 " backspace in Visual mode deletes selection
 vnoremap <BS> d
@@ -474,7 +470,7 @@ xnoremap P Pgvy
 
 " To avoid the extra 'shift' keypress when typing the colon to go to cmdline mode
 noremap ; :
-noremap : ;
+noremap ;; ;
 
 " Quickly insert parenthesis/brackets/etc.:
 inoremap <leader>( ()<esc>i
@@ -553,12 +549,12 @@ function! HasLinewidth()
     endif
 endfunction
 
-function! CopyrightAdd()
+function! AddCopyright()
     call append(0, b:comment_leader . "==============================================")
     call append(1, b:comment_leader . "·")
-    call append(2, b:comment_leader . "· Author: Mogei Wang")
+    call append(2, b:comment_leader . "· Author: Maoji Wang")
     call append(3, b:comment_leader . "·")
-    call append(4, b:comment_leader . "· MogeiWang@GMail.com")
+    call append(4, b:comment_leader . "· Maoji.Wang@cs.nyu.edu")
     call append(5, b:comment_leader . "·")
     call append(6, b:comment_leader . "· Filename: ".expand("%:t"))
     call append(7, b:comment_leader . "·")
@@ -571,7 +567,7 @@ function! CopyrightAdd()
     echohl WarningMsg | echo "copyright information added." | echohl None
 endfunction
 
-function! CopyrightUpdate()
+function! UpdateCopyright()
     let n=1
     while n < 20
         let line = getline(n)
@@ -587,7 +583,7 @@ function! CopyrightUpdate()
     echohl WarningMsg | echo "no copyright information found." | echohl None
 endfunction
 
-function! EnvProcess()
+function! ProcessEnv()
     let n=1
     while n < 3
         let line = getline(n)
