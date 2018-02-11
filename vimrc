@@ -56,7 +56,7 @@ call plug#begin()
     "" better repeater
         Plug 'tpope/vim-repeat'
     "" user interface
-        Plug 'tomasr/molokai'
+        Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
         Plug 'junegunn/goyo.vim'
     "" resources
         Plug 'shougo/unite.vim'
@@ -293,7 +293,7 @@ set cmdheight=2
 
 " colorscheme and background
 let $VIM_TUI_ENABLE_TRUE_COLOR=1
-colorscheme molokai
+colorscheme Tomorrow-Night
 " set t_co=256
 set background=dark
 set t_ut=
