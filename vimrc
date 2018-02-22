@@ -1,6 +1,6 @@
 " VINE """""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
-" Vim Imitating Neo Emacs --- my NeoVim configuration
+" Vim Imitating Neo Emacs
 "     for processing tex/pdf, and coding in Golang & Python
 "
 " Based on Amir Salihefendic's basic.vimrc
@@ -95,25 +95,33 @@ call plug#begin()
         Plug 'jceb/vim-orgmode'
 call plug#end()
 
+" SuperTab
+let g:SuperTabDefaultCompletionType    = '<C-n>'
+let g:SuperTabCrMapping                = 0
+
 " UltiSnips
-let g:UltiSnipsExpandTrigger = '<M-Tab>'
-let g:UltiSnipsJumpForwardTrigger = '<Tab>'
-let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
+let g:UltiSnipsExpandTrigger           = '<Tab>'
+let g:UltiSnipsJumpForwardTrigger      = '<Tab>'
+let g:UltiSnipsJumpBackwardTrigger     = '<S-Tab>'
+
+" ycm
+let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
 
 " Ctrl-P
-let g:ctrlp_map = '<c-q>'
+let g:ctrlp_map = 'F12'
 let g:ctrlp_cmd = 'CtrlP'
 
 " sessions
 let g:session_directory = '~/.vim/sessions'
-let g:session_autosave = 'no'
+let g:session_autosave = 'yes'
 
 " easy motion
 nmap <leader>m <Plug>(easymotion-s)
 " nmap <....>. <Plug>(easymotion-t)
 
 " vim-debugger
-let g:vebugger_leader='<c-c>'
+let g:vebugger_leader='<C-c>'
 "let g:vebugger_view_source_cmd='edit'
 
 " syntastic
@@ -312,7 +320,7 @@ hi ColorColumn NONE ctermbg=Cyan
 
 "set font
 "set guifont=DejaVu_Sans_Mono:h12
-set guifont=Ubuntu\ Mono\ 13
+set guifont=Ubuntu\ Mono\ 15
 
 " Format the status line
 set statusline=\ \%3cC\ \%4lL\ \%<\%p%%\%L\ \%8bA\ \%{HasPaste()}\ %3{HasLinewidth()}W\ NM\%=%n%m\%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\"}[%{&ff}][%r%h%w]\%F
@@ -340,9 +348,9 @@ else
 endif
 
 " Turn backup on. Need to build these folders manually.
-"set backup
-"set backupdir=/home/mw/.vim/backup
-set directory=/home/mw/.vim/tmp
+set backup
+set backupdir=$HOME/.vim/backup
+set directory=$HOME/.vim/tmp
 
 " Set utf8 as standard encoding, and en_US as the standard language
 set encoding=utf8
@@ -370,7 +378,7 @@ autocmd BufReadPost *
 autocmd BufWritePre *
     \ exec ":call UpdateCopyright()" |
     \ exec ":call DeleteTrailingWS()" |
-    \ let &backupext = '.v-' . strftime("%Y%m%d-%H%M%S")
+    \ let &backupext = '.-' . strftime("%Y%m%d-%H%M%S")
 
 " enable omni-completion
 set omnifunc=syntaxcomplete#Complete
@@ -458,19 +466,16 @@ au FileType markdown nmap <F7> :!pandoc -f markdown+lhs % -o markdown.html -t dz
 " F8: open vim file explorer
 noremap <F8> :NERDTreeToggle<CR>
 
-" F9: open terminal
-noremap <F9> :vsplit<CR><C-W>l:terminal 'fish'<CR>
+" F9: start the debugger
+"noremap <F9> :VBGstartGDB
+" F9: be focus
+nnoremap <F9> :Goyo<CR>
 
 " F10: tags
 noremap <F10> :TagbarToggle<CR>
 
-" F11: start the debugger
-"noremap <F11> :VBGstartGDB
-" F11: be focus
-nnoremap <F11> :Goyo<CR>
-
-" F12 attach copyright things
-noremap <F12> :call AddCopyright()<CR>:call ProcessEnv()<CR>
+" F11 attach copyright things
+noremap <F11> :call AddCopyright()<CR>:call ProcessEnv()<CR>
 
 " backspace in Visual mode deletes selection
 vnoremap <BS> d

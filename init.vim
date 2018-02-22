@@ -20,7 +20,7 @@
 " replace system's fish shell. run sh cmd with :! or :r!
 set shell=/bin/zsh
 
-" use Space as the leader
+" set the leader
 let mapleader = ","
 let g:mapleader = ","
 
@@ -81,25 +81,33 @@ call plug#begin()
         Plug 'jceb/vim-orgmode'
 call plug#end()
 
+" SuperTab
+let g:SuperTabDefaultCompletionType    = '<C-n>'
+let g:SuperTabCrMapping                = 0
+
 " UltiSnips
-let g:UltiSnipsExpandTrigger = '<M-Tab>'
-let g:UltiSnipsJumpForwardTrigger = '<Tab>'
-let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
+let g:UltiSnipsExpandTrigger           = '<Tab>'
+let g:UltiSnipsJumpForwardTrigger      = '<Tab>'
+let g:UltiSnipsJumpBackwardTrigger     = '<S-Tab>'
+
+" ycm
+let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
 
 " Ctrl-P
-let g:ctrlp_map = '<c-q>'
+let g:ctrlp_map = 'F12'
 let g:ctrlp_cmd = 'CtrlP'
 
 " sessions
 let g:session_directory = '~/.config/nvim/sessions'
-let g:session_autosave = 'no'
+let g:session_autosave = 'yes'
 
 " easy motion
 nmap <leader>m <Plug>(easymotion-s)
 " nmap <....>. <Plug>(easymotion-t)
 
 " vim-debugger
-let g:vebugger_leader='<c-c>'
+let g:vebugger_leader='<C-c>'
 "let g:vebugger_view_source_cmd='edit'
 
 " syntastic
@@ -283,7 +291,7 @@ set colorcolumn=+1
 "hi ColorColumn NONE ctermbg=Cyan
 
 "set font
-set guifont=Ubuntu\ Mono\ 12
+set guifont=Ubuntu\ Mono\ 15
 
 " Format the status line
 set statusline=\ \%3cC\ \%4lL\ \%<\%p%%\%L\ \%8bA\ \%{HasPaste()}\ %3{HasLinewidth()}W\ NM\%=%n%m\%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\"}[%{&ff}][%r%h%w]\%F
@@ -311,9 +319,9 @@ else
 endif
 
 " Turn backup on. Need to build these folders manually.
-"set backup
-"set backupdir=/home/mw/.config/nvim/backup
-set directory=/home/mw/.config/nvim/tmp
+set backup
+set backupdir=$HOME/.config/nvim/backup
+set directory=$HOME/.config/nvim/tmp
 
 " encodeing just opened file.
 set fileencodings=utf8,gbk,ucs-bom,cp936,gb2312,gb18030,big5,euc-jp,euc-kr
@@ -330,7 +338,7 @@ autocmd BufReadPost *
 autocmd BufWritePre *
     \ exec ":call UpdateCopyright()" |
     \ exec ":call DeleteTrailingWS()" |
-    \ let &backupext = '.v-' . strftime("%Y%m%d-%H%M%S")
+    \ let &backupext = '.-' . strftime("%Y%m%d-%H%M%S")
 
 " enable omni-completion
 set omnifunc=syntaxcomplete#Complete
@@ -418,19 +426,16 @@ au FileType markdown nmap <F7> :!pandoc -f markdown+lhs % -o markdown.html -t dz
 " F8: open vim file explorer
 noremap <F8> :NERDTreeToggle<CR>
 
-" F9: open terminal
-noremap <F9> :vsplit<CR><C-W>l:terminal 'fish'<CR>
+" F9: start the debugger
+"noremap <F9> :VBGstartGDB
+" F9: be focus
+nnoremap <F9> :Goyo<CR>
 
 " F10: tags
 noremap <F10> :TagbarToggle<CR>
 
-" F11: start the debugger
-"noremap <F11> :VBGstartGDB
-" F11: be focus
-nnoremap <F11> :Goyo<CR>
-
-" F12 attach copyright things
-noremap <F12> :call AddCopyright()<CR>:call ProcessEnv()<CR>
+" F11 attach copyright things
+noremap <F11> :call AddCopyright()<CR>:call ProcessEnv()<CR>
 
 " backspace in Visual mode deletes selection
 vnoremap <BS> d
@@ -554,7 +559,7 @@ function! AddCopyright()
     call append(1, b:comment_leader . "·")
     call append(2, b:comment_leader . "· Author: Maoji Wang")
     call append(3, b:comment_leader . "·")
-    call append(4, b:comment_leader . "· Maoji.Wang@cs.nyu.edu")
+    call append(4, b:comment_leader . "· maoji.wang@cs.nyu.edu")
     call append(5, b:comment_leader . "·")
     call append(6, b:comment_leader . "· Filename: ".expand("%:t"))
     call append(7, b:comment_leader . "·")
