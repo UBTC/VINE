@@ -1,6 +1,6 @@
 " VINE """""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
-" Vim Imitating Neo Emacs --- my [neo]Vim configuration
+" Vim Imitating Neo Emacs --- my Neovim configuration
 "     for processing tex/pdf, and coding in Golang & Python
 "
 " Based on Amir Salihefendic's basic.vimrc
@@ -27,7 +27,7 @@ let g:mapleader = ","
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"  curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+"  curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 call plug#begin()
     " surround
         Plug 'tpope/vim-surround'
@@ -56,20 +56,20 @@ call plug#begin()
         Plug 'ervandew/supertab'
     " snippet
         Plug 'sirver/ultisnips'
-        Plug 'honza/vim-snippets', { 'do': 'cp ~/.config/nvim/plugged/vim-snippets/UltiSnips/ ~/.config/nvim/' }
+        Plug 'honza/vim-snippets', { 'do': 'cp $HOME/.config/nvim/plugged/vim-snippets/UltiSnips/ $HOME/.config/nvim/' }
     " syatastic
        Plug 'scrooloose/syntastic'
     " nerds
         Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
         Plug 'scrooloose/nerdcommenter'
     " debugger (, { 'on':  'VBGattachGDB' })
-        Plug 'Shougo/vimproc.vim', { 'do': 'make; cp -r ~/.config/nvim/plugged/vimproc.vim/autoload ~/.config/nvim/; cp -r ~/.config/nvim/plugged/vimproc.vim/lib ~/.config/nvim/' }
-        Plug 'idanarye/vim-vebugger', { 'do': 'cp -r ~/.config/nvim/plugged/vim-vebugger/autoload ~/.config/nvim/' }
+        Plug 'Shougo/vimproc.vim', { 'do': 'make; cp -r $HOME/.config/nvim/plugged/vimproc.vim/autoload $HOME/.config/nvim/; cp -r $HOME/.config/nvim/plugged/vimproc.vim/lib $HOME/.config/nvim/' }
+        Plug 'idanarye/vim-vebugger', { 'do': 'cp -r $HOME/.config/nvim/plugged/vim-vebugger/autoload $HOME/.config/nvim/' }
     " tagbar --- use with exuberant-ctags ( 'on':  'TagbarToggle', )
         Plug 'majutsushi/tagbar', { 'do': 'go get -u github.com/jstemmer/gotags' }
     " golang
         Plug 'fatih/vim-go'
-        Plug 'nsf/gocode', { 'do': 'go get -u github.com/nsf/gocode; cp ~/.config/nvim/plugged/gocode/vim/autoload/gocomplete.vim ~/.config/nvim/autoload/' }
+        Plug 'nsf/gocode', { 'do': 'go get -u github.com/nsf/gocode; cp $HOME/.config/nvim/plugged/gocode/vim/autoload/gocomplete.vim $HOME/.config/nvim/autoload/' }
     " python
         Plug 'klen/python-mode'
     " latex
@@ -95,11 +95,11 @@ let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
 
 " Ctrl-P
-let g:ctrlp_map = 'F12'
-let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_map = '<C-p>'
+let g:ctrlp_cmd = 'ctrlp'
 
 " sessions
-let g:session_directory = '~/.config/nvim/sessions'
+let g:session_directory = '$HOME/.config/nvim/sessions'
 let g:session_autosave = 'yes'
 
 " easy motion
@@ -153,7 +153,7 @@ let g:tagbar_type_go = {
         \ 'ctype' : 't',
         \ 'ntype' : 'n'
     \ },
-    \ 'ctagsbin'  : '~/golang/bin/gotags',
+    \ 'ctagsbin'  : '$HOME/golang/bin/gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
@@ -291,7 +291,7 @@ set colorcolumn=+1
 "hi ColorColumn NONE ctermbg=Cyan
 
 "set font
-set guifont=Ubuntu\ Mono\ 15
+set guifont=DejaVu\ Sans\ Mono\ 12
 
 " Format the status line
 set statusline=\ \%3cC\ \%4lL\ \%<\%p%%\%L\ \%8bA\ \%{HasPaste()}\ %3{HasLinewidth()}W\ NM\%=%n%m\%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\"}[%{&ff}][%r%h%w]\%F
@@ -427,15 +427,16 @@ au FileType markdown nmap <F7> :!pandoc -f markdown+lhs % -o markdown.html -t dz
 noremap <F8> :NERDTreeToggle<CR>
 
 " F9: start the debugger
-"noremap <F9> :VBGstartGDB
-" F9: be focus
-nnoremap <F9> :Goyo<CR>
+noremap <F9> :VBGstartGDB
 
-" F10: tags
-noremap <F10> :TagbarToggle<CR>
+" F10: be focus
+nnoremap <F10> :Goyo<CR>
 
-" F11 attach copyright things
-noremap <F11> :call AddCopyright()<CR>:call ProcessEnv()<CR>
+" F11: tags
+noremap <F11> :TagbarToggle<CR>
+
+" F12 attach copyright things
+noremap <F12> :call AddCopyright()<CR>:call ProcessEnv()<CR>
 
 " backspace in Visual mode deletes selection
 vnoremap <BS> d
@@ -483,8 +484,7 @@ inoremap <leader>[ []<esc>i
 inoremap <leader>{ {}<esc>i
 inoremap <leader>' ''<esc>i
 inoremap <leader>" ""<esc>i
-inoremap <leader>` `'<esc>i
-inoremap <leader>~ ``"<esc>i
+inoremap <leader>` ``<esc>i
 inoremap <leader>$ $$<esc>i
 inoremap <leader>\| \|\|<esc>i
 

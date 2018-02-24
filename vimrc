@@ -1,6 +1,6 @@
 " VINE """""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
-" Vim Imitating Neo Emacs
+" Vim Imitating Neo Emacs --- my Vim configuration
 "     for processing tex/pdf, and coding in Golang & Python
 "
 " Based on Amir Salihefendic's basic.vimrc
@@ -40,7 +40,7 @@ let g:mapleader = ","
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+"  curl -fLo $HOME/.vim/autoload/plug.vim --create-dirs \
 "  'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 call plug#begin()
     "" surround
@@ -70,20 +70,20 @@ call plug#begin()
         Plug 'ervandew/supertab'
     "" snippet
         Plug 'sirver/ultisnips'
-        Plug 'honza/vim-snippets', { 'do': 'cp ~/.vim/plugged/vim-snippets/UltiSnips/ ~/.vim/' }
+        Plug 'honza/vim-snippets', { 'do': 'cp $HOME/.vim/plugged/vim-snippets/UltiSnips/ $HOME/.vim/' }
     "" syatastic
         Plug 'scrooloose/syntastic'
     "" nerds
         Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
         Plug 'scrooloose/nerdcommenter'
     "" debugger (, { 'on':  'VBGattachGDB' })
-        Plug 'Shougo/vimproc.vim', { 'do': 'make; cp -r ~/.vim/plugged/vimproc.vim/autoload ~/.vim/; cp -r ~/.vim/plugged/vimproc.vim/lib ~/.vim/' }
-        Plug 'idanarye/vim-vebugger', { 'do': 'cp -r ~/.vim/plugged/vim-vebugger/autoload ~/.vim/' }
+        Plug 'Shougo/vimproc.vim', { 'do': 'make; cp -r $HOME/.vim/plugged/vimproc.vim/autoload $HOME/.vim/; cp -r $HOME/.vim/plugged/vimproc.vim/lib $HOME/.vim/' }
+        Plug 'idanarye/vim-vebugger', { 'do': 'cp -r $HOME/.vim/plugged/vim-vebugger/autoload $HOME/.vim/' }
     "" tagbar --- use with exuberant-ctags ( 'on':  'TagbarToggle', )
         Plug 'majutsushi/tagbar', { 'do': 'go get -u github.com/jstemmer/gotags' }
     "" golang
         Plug 'fatih/vim-go'
-        Plug 'nsf/gocode', { 'do': 'go get -u github.com/nsf/gocode; cp ~/.vim/plugged/gocode/vim/autoload/gocomplete.vim ~/.vim/autoload/' }
+        Plug 'nsf/gocode', { 'do': 'go get -u github.com/nsf/gocode; cp $HOME/.vim/plugged/gocode/vim/autoload/gocomplete.vim $HOME/.vim/autoload/' }
     "" python
         Plug 'klen/python-mode'
     "" latex
@@ -109,11 +109,11 @@ let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
 
 " Ctrl-P
-let g:ctrlp_map = 'F12'
-let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_map = '<C-p>'
+let g:ctrlp_cmd = 'ctrlp'
 
 " sessions
-let g:session_directory = '~/.vim/sessions'
+let g:session_directory = '$HOME/.vim/sessions'
 let g:session_autosave = 'yes'
 
 " easy motion
@@ -167,7 +167,7 @@ let g:tagbar_type_go = {
         \ 'ctype' : 't',
         \ 'ntype' : 'n'
     \ },
-    \ 'ctagsbin'  : '~/golang/bin/gotags',
+    \ 'ctagsbin'  : '$HOME/golang/bin/gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
@@ -319,8 +319,8 @@ set colorcolumn=+1
 hi ColorColumn NONE ctermbg=Cyan
 
 "set font
-"set guifont=DejaVu_Sans_Mono:h12
-set guifont=Ubuntu\ Mono\ 15
+"set guifont=Ubuntu\ Mono\ 15
+set guifont=DejaVu\ Sans\ Mono\ 12
 
 " Format the status line
 set statusline=\ \%3cC\ \%4lL\ \%<\%p%%\%L\ \%8bA\ \%{HasPaste()}\ %3{HasLinewidth()}W\ NM\%=%n%m\%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\"}[%{&ff}][%r%h%w]\%F
@@ -467,15 +467,16 @@ au FileType markdown nmap <F7> :!pandoc -f markdown+lhs % -o markdown.html -t dz
 noremap <F8> :NERDTreeToggle<CR>
 
 " F9: start the debugger
-"noremap <F9> :VBGstartGDB
-" F9: be focus
-nnoremap <F9> :Goyo<CR>
+noremap <F9> :VBGstartGDB
 
-" F10: tags
-noremap <F10> :TagbarToggle<CR>
+" F10: be focus
+nnoremap <F10> :Goyo<CR>
 
-" F11 attach copyright things
-noremap <F11> :call AddCopyright()<CR>:call ProcessEnv()<CR>
+" F11: tags
+noremap <F11> :TagbarToggle<CR>
+
+" F12 attach copyright things
+noremap <F12> :call AddCopyright()<CR>:call ProcessEnv()<CR>
 
 " backspace in Visual mode deletes selection
 vnoremap <BS> d
@@ -523,8 +524,7 @@ inoremap <leader>[ []<esc>i
 inoremap <leader>{ {}<esc>i
 inoremap <leader>' ''<esc>i
 inoremap <leader>" ""<esc>i
-inoremap <leader>` `'<esc>i
-inoremap <leader>~ ``"<esc>i
+inoremap <leader>` ``<esc>i
 inoremap <leader>$ $$<esc>i
 inoremap <leader>\| \|\|<esc>i
 
