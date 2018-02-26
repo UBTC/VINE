@@ -99,8 +99,8 @@ let g:ctrlp_map = '<C-p>'
 let g:ctrlp_cmd = 'ctrlp'
 
 " sessions
-let g:session_directory = '$HOME/.config/nvim/sessions'
-let g:session_autosave = 'yes'
+let g:session_directory = $HOME . '/.config/nvim/sessions'
+let g:session_autosave = 'no'
 
 " easy motion
 nmap <leader>m <Plug>(easymotion-s)
