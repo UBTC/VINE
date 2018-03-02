@@ -110,7 +110,7 @@ let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
 
 " Ctrl-P
 let g:ctrlp_map = '<C-p>'
-let g:ctrlp_cmd = 'ctrlp'
+let g:ctrlp_cmd = 'CtrlP'
 
 " sessions
 let g:session_directory = $HOME . '/.vim/sessions'
