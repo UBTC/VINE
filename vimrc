@@ -596,7 +596,7 @@ function! HasLinewidth()
 endfunction
 
 function! AddPartingLine()
-    call append(line('.'), b:comment_leader . "· <=>-<=> <=>-<=> <=>-<=> <=>-<=> <=>-<=> <=>-<=>")
+    call append(line('.'), b:comment_leader . " · <=>---<=>   <=>---<=>   <=>---<=>   <=>---<=>   <=>---<=>   <=>---<=>")
 endfunction
 
 function! AddCopyright()
