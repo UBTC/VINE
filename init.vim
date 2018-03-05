@@ -43,7 +43,7 @@ call plug#begin()
         Plug 'tpope/vim-repeat'
     " user interface
         Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
-        Plug 'junegunn/goyo.vim'
+        " Plug 'junegunn/goyo.vim'
     " resources
         Plug 'shougo/unite.vim'
         Plug 'codepiano/ctrlp.vim'
@@ -430,7 +430,7 @@ noremap <F8> :NERDTreeToggle<CR>
 noremap <F9> :VBGstartGDB
 
 " F10: be focus
-nnoremap <F10> :Goyo<CR>
+noremap <F10> 2o<ESC>k:call AddPartingLine()<CR>j
 
 " F11: tags
 noremap <F11> :TagbarToggle<CR>
@@ -554,6 +554,11 @@ function! HasLinewidth()
     endif
 endfunction
 
+function! AddPartingLine()
+    call append(line('.'), b:comment_leader . "· <=>-<=> <=>-<=> <=>-<=> <=>-<=> <=>-<=> <=>-<=>")
+endfunction
+
+
 function! AddCopyright()
     call append(0, b:comment_leader . "==============================================")
     call append(1, b:comment_leader . "·")
@@ -605,7 +610,7 @@ function! ProcessEnv()
     elseif &filetype == 'python' || &filetype == 'py'
         call append(0, b:comment_leader . "!/usr/bin/env python")
     elseif &filetype == 'octave' || &filetype == 'm'
-        call append(0, "#!/usr/bin/env octave")
+        call append(0, "#  !/usr/bin/env octave")
     else
         call append(0, b:comment_leader . "!/usr/bin/env " . &filetype)
     endif
