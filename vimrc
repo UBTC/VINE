@@ -57,8 +57,6 @@ call plug#begin()
         Plug 'tpope/vim-repeat'
     "" user interface
         Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
-    "" show only the text region
-        " Plug 'junegunn/goyo.vim'
     "" resources
         Plug 'shougo/unite.vim'
         Plug 'codepiano/ctrlp.vim'
@@ -86,7 +84,7 @@ call plug#begin()
         Plug 'fatih/vim-go'
         Plug 'nsf/gocode', { 'do': 'go get -u github.com/nsf/gocode; cp $HOME/.vim/plugged/gocode/vim/autoload/gocomplete.vim $HOME/.vim/autoload/' }
     "" python
-        Plug 'klen/python-mode'
+        "Plug 'klen/python-mode'
     "" latex
         Plug 'gerw/vim-latex-suite'
     "" pandoc and markdown
@@ -278,6 +276,9 @@ set tm=500
 " Add a bit extra margin to the left
 set foldcolumn=3
 
+" Increase the space between lines
+set linespace=3
+
 "show the command typing
 set showcmd
 
@@ -303,7 +304,6 @@ set cmdheight=2
 " colorscheme and background
 let $VIM_TUI_ENABLE_TRUE_COLOR=1
 colorscheme Tomorrow-Night-Bright
-" set t_co=256
 set background=dark
 set t_ut=
 
@@ -320,13 +320,8 @@ set colorcolumn=+1
 hi ColorColumn NONE ctermbg=Cyan
 
 "set font
-"set guifont=Ubuntu\ Mono\ 15
+"set guifont=Ubuntu\ Mono\ 12
 set guifont=DejaVu\ Sans\ Mono\ 12
-
-" Format the status line
-set statusline=\ \%3cC\ \%4lL\ \%<\%p%%\%L\ \%8bA\ \%{HasPaste()}\ %3{HasLinewidth()}W\ NM\%=%n%m\%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\"}[%{&ff}][%r%h%w]\%F
-au InsertEnter * set statusline=\ \%3cC\ \%4lL\ \%<\%p%%\%L\ \%8bA\ \%{HasPaste()}\ %3{HasLinewidth()}W\ MI\%=%n%m\%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\"}[%{&ff}][%r%h%w]\%F
-au InsertLeave * set statusline=\ \%3cC\ \%4lL\ \%<\%p%%\%L\ \%8bA\ \%{HasPaste()}\ %3{HasLinewidth()}W\ NM\%=%n%m\%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\"}[%{&ff}][%r%h%w]\%F
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files
