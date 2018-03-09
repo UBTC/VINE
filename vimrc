@@ -302,7 +302,7 @@ set cmdheight=2
 
 " colorscheme and background
 let $VIM_TUI_ENABLE_TRUE_COLOR=1
-colorscheme Tomorrow-Night
+colorscheme Tomorrow-Night-Bright
 " set t_co=256
 set background=dark
 set t_ut=
@@ -658,3 +658,23 @@ function! ProcessEnv()
     call append(2, "")
     echohl WarningMsg | echo "env information added(gg check it)!" | echohl None
 endfunction
+
+augroup LargeFile
+        " Set options:
+        "   eventignore+=FileType (no syntax highlighting etc
+        "   assumes FileType always on)
+        "   noswapfile (save copy of file)
+        "   bufhidden=unload (save memory when other file is viewed)
+        "   buftype=nowritefile (is read-only)
+        "   undolevels=-1 (no undo possible)
+        let g:large_file = 1048576 " 1MB
+
+        au BufReadPre *
+                \ let f=expand("<afile>") |
+                \ if getfsize(f) > g:large_file |
+                        \ set eventignore+=FileType |
+                        \ setlocal noswapfile bufhidden=unload buftype=nowrite undolevels=-1 |
+                \ else |
+                        \ set eventignore-=FileType |
+                \ endif
+augroup END
