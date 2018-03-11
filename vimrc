@@ -58,7 +58,7 @@ call plug#begin()
     "" user interface
         Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
     "" resources
-        Plug 'shougo/unite.vim'
+        Plug 'shougo/denite.nvim'
         Plug 'codepiano/ctrlp.vim'
     "" session and more
         Plug 'mhinz/vim-startify'
@@ -320,8 +320,14 @@ set colorcolumn=+1
 hi ColorColumn NONE ctermbg=Cyan
 
 "set font
-"set guifont=Ubuntu\ Mono\ 12
+"set guifont=Ubuntu\ Mono\ 13
 set guifont=DejaVu\ Sans\ Mono\ 12
+
+" Smart way to move between windows (<ctrl>j etc.)
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files
@@ -432,6 +438,9 @@ noremap <leader><CR> :tabedit <c-r>=expand("%:p:h")<CR>/
 " :W sudo saves the file
 command! W w !sudo tee % > /dev/null
 
+" Switch CWD to the directory of the open buffer
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
+
 " Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
 nnoremap <M-j> mz:m+<CR>`z
 nnoremap <M-k> mz:m-2<CR>`z
@@ -442,10 +451,10 @@ vnoremap <M-k> :m'<-2<CR>`>my`<mzgv`yo`z
 noremap <leader><BS> :%s/\s\+$//ge<CR>
 
 " F1-F4 resources
-noremap <F1> :Unite file_rec<CR>
-noremap <F2> :Unite file<CR>
-noremap <F3> :Unite buffer<CR>
-noremap <F4> :Unite tab<CR>
+noremap <F1> :Denite file_rec<CR>
+noremap <F2> :Denite buffer<CR>
+noremap <F3> :Denite line<CR>
+noremap <F4> :Denite change<CR>
 
 " F5: run according to filetypes
 au FileType go nmap <F5> :terminal<CR><Plug>(go-run)
@@ -465,11 +474,11 @@ noremap <F8> :NERDTreeToggle<CR>
 " F9: start the debugger
 noremap <F9> :VBGstartGDB
 
-" F10: be focus
-noremap <F10> 2o<ESC>k:call AddPartingLine()<CR>j
+" F10: tags
+noremap <F10> :TagbarToggle<CR>
 
-" F11: tags
-noremap <F11> :TagbarToggle<CR>
+" F11: be focus
+noremap <F11> 2o<ESC>k:call AddPartingLine()<CR>j
 
 " F12 attach copyright things
 noremap <F12> :call AddCopyright()<CR>:call ProcessEnv()<CR>
@@ -485,7 +494,7 @@ vnoremap <C-S> <C-C>:update<CR>
 inoremap <C-S> <C-O>:update<CR>
 
 " CTRL-F4 is Close window
-noremap <C-F4> <C-W>c
+noremap  <C-F4> <C-W>c
 inoremap <C-F4> <C-O><C-W>c
 cnoremap <C-F4> <C-C><C-W>c
 onoremap <C-F4> <C-C><C-W>c
@@ -510,24 +519,40 @@ map Y y$
 xnoremap p pgvy
 xnoremap P Pgvy
 
+" Toggle paste mode on and off
+map <leader>pp :setlocal paste!<cr>
+
 " To avoid the extra 'shift' keypress when typing the colon to go to cmdline mode
 noremap ; :
 noremap ;; ;
 
-" Quickly insert parenthesis/brackets/etc.:
-inoremap <leader>( ()<esc>i
-inoremap <leader>[ []<esc>i
-inoremap <leader>{ {}<esc>i
-inoremap <leader>' ''<esc>i
-inoremap <leader>" ""<esc>i
-inoremap <leader>` ``<esc>i
-inoremap <leader>$ $$<esc>i
-inoremap <leader>\| \|\|<esc>i
+" Quickly insert parenthesis/brackets/etc.
+inoremap <space>( ()<esc>i
+inoremap <space>[ []<esc>i
+inoremap <space>{ {}<esc>i
+inoremap <space>' ''<esc>i
+inoremap <space>" ""<esc>i
+inoremap <space>` ``<esc>i
+inoremap <space>$ $$<esc>i
+inoremap <space>\| \|\|<esc>i
+
+" Surround the visual selection in parenthesis/brackets/etc.
+vnoremap <space>( <esc>`>a)<esc>`<i(<esc>
+vnoremap <space>[ <esc>`>a]<esc>`<i[<esc>
+vnoremap <space>{ <esc>`>a}<esc>`<i{<esc>
+vnoremap <space>" <esc>`>a"<esc>`<i"<esc>
+vnoremap <space>' <esc>`>a'<esc>`<i'<esc>
+vnoremap <space>` <esc>`>a`<esc>`<i`<esc>
+vnoremap <space>$ <esc>`>a$<esc>`<i$<esc>
+vnoremap <space>\| <esc>`>a\|<esc>`<i\|<esc>
 
 " brackets
 inoremap <expr> <silent> ( MayCloseParentheses('(')
 inoremap <expr> <silent> [ MayCloseParentheses('[')
 inoremap <expr> <silent> { MayCloseParentheses('{')
+
+" Insert the current date and time (useful for timestamps)
+iab xdate <c-r>=strftime("%Y/%m/%d %H:%M:%S")<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Functions
