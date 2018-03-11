@@ -56,7 +56,7 @@ call plug#begin()
     "" better repeater
         Plug 'tpope/vim-repeat'
     "" user interface
-        Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
+        Plug 'reedes/vim-colors-pencil'
     "" resources
         Plug 'shougo/denite.nvim'
         Plug 'codepiano/ctrlp.vim'
@@ -303,8 +303,8 @@ set cmdheight=2
 
 " colorscheme and background
 let $VIM_TUI_ENABLE_TRUE_COLOR=1
-colorscheme Tomorrow-Night-Bright
-set background=dark
+colorscheme pencil
+set background=light
 set t_ut=
 
 " Set extra options when running in GUI mode
@@ -320,7 +320,7 @@ set colorcolumn=+1
 hi ColorColumn NONE ctermbg=Cyan
 
 "set font
-"set guifont=Ubuntu\ Mono\ 13
+"set guifont=Bitstream\ Vera\ Sans\ Mono\ 12
 set guifont=DejaVu\ Sans\ Mono\ 12
 
 " Smart way to move between windows (<ctrl>j etc.)
