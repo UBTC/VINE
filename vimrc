@@ -124,9 +124,6 @@ let g:vebugger_leader='<C-c>'
 "let g:vebugger_view_source_cmd='edit'
 
 " syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
@@ -304,7 +301,7 @@ set cmdheight=2
 " colorscheme and background
 let $VIM_TUI_ENABLE_TRUE_COLOR=1
 colorscheme pencil
-set background=light
+set background=dark "light
 set t_ut=
 
 " Set extra options when running in GUI mode
@@ -323,11 +320,18 @@ hi ColorColumn NONE ctermbg=Cyan
 "set guifont=Bitstream\ Vera\ Sans\ Mono\ 12
 set guifont=DejaVu\ Sans\ Mono\ 12
 
-" Smart way to move between windows (<ctrl>j etc.)
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+" Format the status line
+set statusline=\ \%3cC\ \%4lL\ \%<\%p%%\%L\ \%8bA\ \%{HasPaste()}\ %3{HasLinewidth()}W\ NM\%=%n%m\%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\"}[%{&ff}][%r%h%w]\%F
+au InsertEnter * set statusline=\ \%3cC\ \%4lL\ \%<\%p%%\%L\ \%8bA\ \%{HasPaste()}\ %3{HasLinewidth()}W\ MI\%=%n%m\%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\"}[%{&ff}][%r%h%w]\%F
+au InsertLeave * set statusline=\ \%3cC\ \%4lL\ \%<\%p%%\%L\ \%8bA\ \%{HasPaste()}\ %3{HasLinewidth()}W\ NM\%=%n%m\%y%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\"}[%{&ff}][%r%h%w]\%F
+
+" add more components to statusline
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+" display the status line always
+set laststatus=2
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files
@@ -498,6 +502,12 @@ noremap  <C-F4> <C-W>c
 inoremap <C-F4> <C-O><C-W>c
 cnoremap <C-F4> <C-C><C-W>c
 onoremap <C-F4> <C-C><C-W>c
+
+" Smart way to move between windows (<ctrl>j etc.)
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
 
 " emacsish keybindings
 noremap  <C-G> <Esc>
